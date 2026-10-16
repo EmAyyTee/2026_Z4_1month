@@ -73,8 +73,8 @@ public class PlayerAttack : MonoBehaviour
             _attackInput = false;
             return;
         }
-        // Jeżeli przeciwnik jest martwy lub gracz są martwi, nie zaatakujemy. 
-        if (_enemyHealth != null && _enemyHealth.IsDead || _playerHealth == null && _playerHealth.IsDead)
+        // Jeżeli gracz jest martwy, nie zaatakujemy. 
+        if (_playerHealth == null && _playerHealth.IsDead)
             return;
 
         bool isGrounded = _animator.GetBool(IsGrounded);

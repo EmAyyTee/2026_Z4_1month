@@ -107,7 +107,7 @@ public class EnemyAttack : MonoBehaviour
     private void PerformAttack()
     {
         // Jeżeli przeciwnik jest martwy lub nie ma żadnych celów, nie zada obrażeń.
-        if (_playerHealth != null && _playerHealth.IsDead && _playerTarget == null)
+        if (_playerHealth.IsDead && _playerTarget == null)
             return;
 
         _playerHealth.TakeDamage(damage, transform);
