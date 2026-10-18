@@ -256,6 +256,10 @@ public class PlayerHealth : MonoBehaviour
 
     private void UpdateHealthUI()
     {
+        if (healthBar == null)
+            return;
+
+        healthBar.minValue = 0;
         healthBar.maxValue = maxHealth;
         healthBar.value = _currentHealth;
     }
