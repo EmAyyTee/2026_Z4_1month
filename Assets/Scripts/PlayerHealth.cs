@@ -108,6 +108,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         _animator.SetTrigger(Hit);
+        _animator.Update(0f);
         ApplyKnockback(attacker);
     }
 
@@ -149,6 +150,10 @@ public class PlayerHealth : MonoBehaviour
 
     private void ApplyKnockback(Transform attacker)
     {
+        // Brak atakującego, np. obrażenia od upadku.
+        if (attacker == null)
+            return;
+        
         // Postać zostaje odrzucona w przeciwną stronę od strony atakującej.
         float direction = Mathf.Sign(transform.position.x - attacker.position.x);
 
@@ -230,6 +235,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void UpdateHealthRegeneration()
     {
+        if (_isDead)
+            return;
         // Regeneracja zaczyna się po upływie określonego czasu.
         if (Time.time < _lastDamageTime + regenDelay)
             return;
@@ -262,5 +269,25 @@ public class PlayerHealth : MonoBehaviour
         healthBar.minValue = 0;
         healthBar.maxValue = maxHealth;
         healthBar.value = _currentHealth;
+    }
+    
+    public void KillImmediately()
+    {
+        if (_isDead)
+            return;
+
+        Die(false);
+    }
+    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Spikes"))
+            Die(true);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Spikes"))
+            Die(true);
     }
 }
