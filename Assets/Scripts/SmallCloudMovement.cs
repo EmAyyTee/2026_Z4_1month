@@ -16,18 +16,14 @@ public class SmallCloudMovement : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        transform.Translate(Vector3.left * (speed * Time.deltaTime));
 
         float leftLimit = cam.transform.position.x - leftOffset;
         float rightLimit = cam.transform.position.x + rightOffset;
 
         if (transform.position.x < leftLimit)
         {
-            transform.position = new Vector3(
-                rightLimit,
-                transform.position.y,
-                transform.position.z
-            );
+            transform.position = new Vector3(rightLimit, transform.position.y, transform.position.z);
         }
     }
 }

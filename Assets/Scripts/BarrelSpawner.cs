@@ -8,25 +8,15 @@ public class BarrelSpawner : MonoBehaviour
     [Header("Spawn Coordinates")]
     public Vector2 spawnPosition = new Vector2(5f, 2f);
 
-    private bool hasSpawned = false;
+    private bool _hasSpawned;
 
     public void SpawnBarrel()
     {
-        if (hasSpawned)
+        if (_hasSpawned || barrelPrefab == null)
             return;
+        
+        Instantiate(barrelPrefab, new Vector3(spawnPosition.x, spawnPosition.y, 0f), Quaternion.identity);
 
-        if (barrelPrefab == null)
-        {
-            Debug.LogError("Nie przypisano prefabu przeciwnika!");
-            return;
-        }
-
-        Instantiate(
-            barrelPrefab,
-            new Vector3(spawnPosition.x, spawnPosition.y, 0f),
-            Quaternion.identity
-        );
-
-        hasSpawned = true;
+        _hasSpawned = true;
     }
 }

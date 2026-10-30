@@ -8,25 +8,15 @@ public class EnemySpawner : MonoBehaviour
     [Header("Spawn Coordinates")]
     public Vector2 spawnPosition = new Vector2(5f, 2f);
 
-    private bool hasSpawned = false;
+    private bool _hasSpawned;
 
     public void SpawnEnemy()
     {
-        if (hasSpawned)
+        if (_hasSpawned || enemyPrefab == null)
             return;
 
-        if (enemyPrefab == null)
-        {
-            Debug.LogError("Nie przypisano prefabu przeciwnika!");
-            return;
-        }
+        Instantiate(enemyPrefab, new Vector3(spawnPosition.x, spawnPosition.y, 0f), Quaternion.identity);
 
-        Instantiate(
-            enemyPrefab,
-            new Vector3(spawnPosition.x, spawnPosition.y, 0f),
-            Quaternion.identity
-        );
-
-        hasSpawned = true;
+        _hasSpawned = true;
     }
 }

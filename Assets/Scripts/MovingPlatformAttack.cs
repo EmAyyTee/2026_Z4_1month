@@ -14,16 +14,6 @@ public class MovingPlatformAttack : MonoBehaviour
         _platform = GetComponent<MovingPlatform>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        CheckPlayer(collision.collider);
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        CheckPlayer(collision.collider);
-    }
-
     private void CheckPlayer(Collider2D other)
     {
         // Platforma musi poruszać się w dół.
@@ -49,8 +39,16 @@ public class MovingPlatformAttack : MonoBehaviour
 
         // Zabijamy tylko wtedy, gdy gracz dotyka ziemi.
         if (touchingGround)
-        {
             player.KillImmediately();
-        }
+    }
+    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        CheckPlayer(collision.collider);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        CheckPlayer(collision.collider);
     }
 }
