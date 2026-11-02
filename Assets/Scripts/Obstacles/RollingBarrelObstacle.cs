@@ -7,6 +7,12 @@ public sealed class RollingBarrelObstacle : MonoBehaviour
     [SerializeField, Min(1)] private int damage = 15;
     [SerializeField, Min(0.1f)] private float lifetime = 12f;
     [SerializeField] private float despawnHeight = -20f;
+    [SerializeField] private float initialSpeed = 0.8f;
+
+    private void Start()
+    {
+        GetComponent<Rigidbody2D>().linearVelocity = Vector2.right * initialSpeed;
+    }
 
     private void OnEnable()
     {

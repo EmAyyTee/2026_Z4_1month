@@ -27,6 +27,7 @@ public sealed class ShooterTotemObstacle : MonoBehaviour
             return;
 
         ObstacleProjectile projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        projectile.transform.localScale = transform.lossyScale;
         projectile.Launch(offset.normalized * projectileSpeed, damage, transform);
         nextFireTime = Time.time + fireCooldown;
     }

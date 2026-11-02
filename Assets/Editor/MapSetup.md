@@ -1,13 +1,23 @@
-# Level 01 map setup
+# Level 01 — wyspa
 
-Open the project in Unity 6.3 LTS and select `Tools > Maps > Build Level 01`.
+Scena: `Assets/Scenes/Scene01/Level01.unity`.
 
-The command creates:
+Otwórz `Window > 2D > Tile Palette` i wybierz `IslandTerrainPalette`. Ziemię maluj regułą `IslandGround` na `Ground`, a pomosty regułą `WoodPlatform` na `Platforms`. Krawędzie i zakończenia dobierają się automatycznie. Jedna komórka zajmuje 0,32 jednostki świata, zgodnie ze skalą istniejącej postaci.
 
-- `Assets/Scenes/Scene01/Level01.unity`
-- Tilemap layers named `Ground`, `Platforms`, `Background`, `Decorations`, and `Foreground`
-- Composite collision geometry for `Ground` and `Platforms`
-- An island tile palette and reusable tile assets
-- Separate prefabs for the rolling barrel, collapsing platform, shooter totem, and projectile
+`Ground` ma pełne kolizje komórek. `Platforms` używa cienkich kształtów odpowiadających deskom. Obie warstwy łączą kolizje przez Composite Collider 2D i mają tag Ground wymagany przez PlayerMovement. Dekoracje oraz tło nie mają kolizji.
 
-The command is idempotent and can be run again to rebuild the generated map assets.
+Warstwy `Background`, `Decorations` i `Foreground` rozdzielają tło, ozdoby przy terenie i elementy przed postacią. Większe grafiki, takie jak palmy, są obiektami SpriteRenderer pod odpowiednią warstwą. Można je przesuwać niezależnie od kafelków.
+
+Ziemia, drewniane pomosty, palmy, tło, beczki i totemy korzystają z istniejących grafik Treasure Hunters. Pliki w `Assets/Maps/IslandArt` to kopie z ustawieniami importu dla tej mapy: dokładne wycinki, 32 PPU, Point i bez kompresji. Oryginalne arkusze i ich ustawienia nie są zmieniane.
+
+`DynamicObstacles` zawiera beczkę na pochylni, spawner aktywowany blisko gracza, dwa zapadające segmenty mostu i dwa totemy. Beczka ma prędkość początkową. Most reaguje na wejście od góry i zmienia kolor przed upadkiem. Flagi oraz skrzynia są punktami orientacyjnymi; nie dodają systemu kończenia poziomu ani ekwipunku.
+
+Kolejne prefaby przeszkód umieszczaj jako dzieci `DynamicObstacles` z lokalną skalą 1. Rodzic zapewnia skalę 0,32 zgodną z terenem. Pociski i nowe beczki dziedziczą skalę emitera.
+
+`Tools > Maps > Rebuild Level 01` odtwarza zaprojektowany układ. Nadpisuje scenę i prefaby przeszkód; najpierw zapisuje ich kopie w `Library/MapBackups`. Zmiana kodu ani otwarcie Unity nie przebudowują mapy automatycznie. Po ręcznym malowaniu zapisuj scenę i nie uruchamiaj przebudowy, jeśli chcesz zachować swój układ.
+
+Generator jest podzielony na import i paletę (`IslandArtBuilder`), układ i dekoracje (`IslandSceneBuilder`), prefaby (`IslandObstacleBuilder`) oraz weryfikację (`IslandMapVerification`). `MapBootstrapper` uruchamia te kroki.
+
+`Tools > Maps > Validate Level 01` kontroluje warstwy i komponenty. Metoda `MapBootstrapper.BuildAndVerify`, przeznaczona do uruchomienia Unity w trybie batchmode bez argumentu `-quit`, otwiera zapisaną scenę w Play Mode i sprawdza dobór sprite'ów oraz rzeczywiste kształty kolizji. Sprawdza też lądowanie ciał na ziemi i pomoście oraz spadanie w przepaść. Zapisuje cztery podglądy w `Library/MapPreviews` i kończy proces Unity. Testy te nie zastępują przejścia poziomu postacią.
+
+Scena nie zawiera jeszcze gracza ani kamery śledzącej. `PlayerSpawn` i `LevelExit` wskazują miejsca integracji. Istniejące skrypty postaci nie są modyfikowane przez generator.
