@@ -21,6 +21,8 @@ public class PlayerAttack : MonoBehaviour
     private PlayerHealth _playerHealth;
     private EnemyHealth _enemyHealth;
     private Transform _enemyTarget;
+    private CannonBall _ballHealth;
+    private Transform _ballTarget;
 
     private bool _attackInput;
     private float _attackTimer;
@@ -95,7 +97,7 @@ public class PlayerAttack : MonoBehaviour
     private void PerformAttack()
     {
         // Jeżeli przeciwnik jest martwy lub nie ma żadnych celów, nie zada obrażeń.
-        if (_playerHealth != null && _playerHealth.IsDead && _enemyTarget == null)
+        if (_playerHealth != null && _playerHealth.IsDead && _enemyTarget == null && _ballTarget == null)
             return;
         
         // Określa, ilu przeciwników jest w zasięgu ataku postaci.
@@ -106,23 +108,30 @@ public class PlayerAttack : MonoBehaviour
         {
             Collider2D hit = _hits[i];
 
+            if (hit.CompareTag("CannonBall"))
+            {
+                _ballHealth = hit.GetComponentInParent<CannonBall>();
+                _ballTarget = _ballHealth != null ? _ballHealth.transform : null;
+                _ballHealth.TakeDamage(damage, transform);
+            }
+            
             if (hit == null || !hit.CompareTag("Enemy"))
                 continue;
-
+            
             // Szuka EnemyHealth na trafionym obiekcie
             _enemyHealth = hit.GetComponentInParent<EnemyHealth>();
-
+            
             // Zapisanie do transform.
             _enemyTarget = _enemyHealth != null ? _enemyHealth.transform : null;
 
             // Jeżeli nie ma systemu zdrowia to koniec.
             if (_enemyTarget == null || _enemyHealth == null)
                 return;
-            
+
             // Pomija martwe postaci.
             if (_enemyHealth == null || _enemyHealth.IsDead)
                 continue;
-
+            
             _enemyHealth.TakeDamage(damage, transform);
         }
     }

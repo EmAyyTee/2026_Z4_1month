@@ -10,6 +10,8 @@ TagManager:
   - Barrel
   - Spikes
   - Platform
+  - CannonBall
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -18,9 +20,9 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
+  - CannonBall
+  - Player
+  - Ground
   - 
   - 
   - 
