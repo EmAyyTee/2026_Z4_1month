@@ -22,8 +22,6 @@ public class SmallCloudMovement : MonoBehaviour
         float rightLimit = cam.transform.position.x + rightOffset;
 
         if (transform.position.x < leftLimit)
-        {
             transform.position = new Vector3(rightLimit, transform.position.y, transform.position.z);
-        }
     }
 }

@@ -12,8 +12,8 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth = 30;
 
     [Header("Knockback")] 
-    public float knockbackForce = 2f;
-    public float knockbackUpward = 1f;
+    public float knockbackForce = 15f;
+    public float knockbackUpward = 15f;
     public float knockbackDuration = 0.2f;
 
     [Header("Fall Damage")] 
@@ -118,13 +118,25 @@ public class EnemyHealth : MonoBehaviour
     
     private void ApplyKnockback(Transform attacker)
     {
-        // Postać zostaje odrzucona w przeciwną stronę od strony atakującej.
+        if (_rb == null || attacker == null)
+            return;
+
+        // Ustalenie kierunku odrzutu.
         float direction = Mathf.Sign(transform.position.x - attacker.position.x);
-        
-        // Odepchnięcie postaci.
+
+        if (direction == 0)
+            direction = 1;
+
+        // Przerwanie poprzedniego odrzutu.
+        if (_knockbackCoroutine != null)
+        {
+            StopCoroutine(_knockbackCoroutine);
+            _knockbackCoroutine = null;
+        }
+
+        // Nadanie siły odrzutu.
         _rb.linearVelocity = new Vector2(direction * knockbackForce, knockbackUpward);
 
-        // Blokada ruchu podczas odrzutu.
         if (_enemyMovement != null)
             _enemyMovement.isKnockedBack = true;
 
@@ -136,10 +148,9 @@ public class EnemyHealth : MonoBehaviour
         yield return new WaitForSeconds(knockbackDuration);
 
         if (_rb != null && !_isDead)
-            // Blokada ruchu poziomego.
+            // Nie zerujemy całkowicie prędkości pionowej.
             _rb.linearVelocity = new Vector2(0f, _rb.linearVelocity.y);
         
-        // Odblokowanie możliwości normalnego poruszania się.
         if (_enemyMovement != null && !_isDead)
             _enemyMovement.isKnockedBack = false;
 

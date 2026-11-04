@@ -4,7 +4,7 @@ using UnityEngine;
 public class BarrelHazard : MonoBehaviour
 {
     [Header("Movement Detection")]
-    [SerializeField] private float movementThreshold = 0.05f;
+    public float movementThreshold = 0.05f;
 
     private Rigidbody2D _rb;
     private bool _stopped;
@@ -17,8 +17,7 @@ public class BarrelHazard : MonoBehaviour
 
     private bool IsMoving()
     {
-        if (_rb.linearVelocity.sqrMagnitude == 0)
-            _stopped = true;
+        if (_rb.linearVelocity.sqrMagnitude == 0) _stopped = true;
         
         return _rb.linearVelocity.sqrMagnitude > movementThreshold * movementThreshold;
     }

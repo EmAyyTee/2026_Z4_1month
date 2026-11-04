@@ -106,19 +106,13 @@ public class PlayerMovement : MonoBehaviour
         if (isKnockedBack)
             return;
 
-        float currentSpeed = _isDashing
-            ? speed * dashMultiplier
-            : speed;
+        float currentSpeed = _isDashing ? speed * dashMultiplier : speed;
 
-        float direction = _isDashing
-            ? _dashDirection
-            : _horizontal;
+        float direction = _isDashing ? _dashDirection : _horizontal;
 
         Vector2 platformVelocity = Vector2.zero;
 
-        bool standingOnPlatform =
-            _movingPlatform != null &&
-            (isGrounded || onSomething);
+        bool standingOnPlatform = _movingPlatform != null && (isGrounded || onSomething);
 
         if (standingOnPlatform)
             platformVelocity = _movingPlatform.CurrentVelocity;
@@ -130,10 +124,8 @@ public class PlayerMovement : MonoBehaviour
         // Przenoszenie gracza razem z platformą.
         // Nie nadpisujemy prędkości pionowej, jeśli gracz skacze.
         if (standingOnPlatform && _rb.linearVelocity.y <= 0f)
-        {
             velocityY = platformVelocity.y;
-        }
-
+        
         _rb.linearVelocity = new Vector2(velocityX, velocityY);
     }
 
@@ -149,11 +141,8 @@ public class PlayerMovement : MonoBehaviour
             if (_movingPlatform != null)
                 platformVelocityY = _movingPlatform.CurrentVelocity.y;
 
-            _rb.linearVelocity = new Vector2(
-                _rb.linearVelocity.x,
-                jumpForce + platformVelocityY
-            );
-
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce + platformVelocityY);
+            
             _jumpsRemaining--;
 
             isGrounded = false;
@@ -164,7 +153,6 @@ public class PlayerMovement : MonoBehaviour
             if (_animator != null)
                 _animator.SetTrigger(Jump);
         }
-
         _jumpPressed = false;
     }
 
@@ -172,8 +160,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float currentTime = Time.time;
 
-        bool isDoubleTap =
-            currentTime - lastPressTime <= doubleTapTime;
+        bool isDoubleTap = currentTime - lastPressTime <= doubleTapTime;
 
         bool canDash = currentTime >= _nextDashTime;
 
@@ -207,12 +194,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateFacingDirection()
     {
-        if (_spriteRenderer != null &&
-            _horizontal != 0f &&
-            !_isDashing)
-        {
+        if (_spriteRenderer != null && _horizontal != 0f && !_isDashing)
             _spriteRenderer.flipX = _horizontal < 0f;
-        }
     }
 
     private void UpdateAnimations()
@@ -240,8 +223,7 @@ public class PlayerMovement : MonoBehaviour
             // że gracz stoi na platformie.
             if (contact.normal.y > 0.5f)
             {
-                _movingPlatform =
-                    collision.gameObject.GetComponent<MovingPlatform>();
+                _movingPlatform = collision.gameObject.GetComponent<MovingPlatform>();
 
                 if (_movingPlatform != null)
                 {
@@ -249,7 +231,6 @@ public class PlayerMovement : MonoBehaviour
                     isGrounded = true;
                     _jumpsRemaining = maxJumps;
                 }
-
                 return;
             }
         }
@@ -288,18 +269,12 @@ public class PlayerMovement : MonoBehaviour
         int count = playerCollider.Overlap(filter, results);
 
         for (int i = 0; i < count; i++)
-        {
-            if (results[i] != null &&
-                results[i].CompareTag("Ground"))
-            {
+            if (results[i] != null && results[i].CompareTag("Ground"))
                 return true;
-            }
-        }
-
+        
         return false;
     }
-
-
+    
     private void OnCollisionStay2D(Collision2D collision)
     {
         CheckMovingPlatform(collision);

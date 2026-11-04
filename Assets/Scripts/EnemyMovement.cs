@@ -103,7 +103,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void UpdateAnimations()
     {
-        _animator.SetFloat(Speed, _horizontal);
+        _animator.SetFloat(Speed, Mathf.Abs(_horizontal));
         _animator.SetBool(IsGrounded, isGrounded);
         _animator.SetFloat(YVelocity, _rb.linearVelocity.y);
     }
