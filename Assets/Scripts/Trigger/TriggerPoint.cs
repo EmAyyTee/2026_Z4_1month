@@ -1,5 +1,4 @@
 using Ship;
-using Trigger.Barrel;
 using UnityEngine;
 
 namespace Trigger
@@ -7,7 +6,7 @@ namespace Trigger
     public class TriggerPoint : MonoBehaviour
     {
         public EnemySpawner spawnerE;
-        public BarrelSpawner spawnerB;
+        public Trigger.Barrel.BarrelSpawner spawnerB;
         public ShipMovement movementS;
     
         private void OnTriggerEnter2D(Collider2D other)
