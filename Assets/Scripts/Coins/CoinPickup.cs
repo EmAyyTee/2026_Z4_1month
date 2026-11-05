@@ -1,27 +1,32 @@
+using Game;
+using Player;
 using UnityEngine;
 
-public class CoinPickup : MonoBehaviour
+namespace Coins
 {
-    [SerializeField, Min(1)] private int _value = 1;
-
-    private bool _collected;
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class CoinPickup : MonoBehaviour
     {
-        if (_collected)
-            return;
+        [SerializeField, Min(1)] private int _value = 1;
 
-        PlayerHealth player =
-            other.GetComponentInParent<PlayerHealth>();
+        private bool _collected;
 
-        if (player == null || player.IsDead)
-            return;
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (_collected)
+                return;
 
-        GameSession session = GameSession.Instance;
+            PlayerHealth player =
+                other.GetComponentInParent<PlayerHealth>();
 
-        _collected = true;
-        session.AddCoins(_value);
+            if (player == null || player.IsDead)
+                return;
 
-        Destroy(gameObject);
+            GameSession session = GameSession.Instance;
+
+            _collected = true;
+            session.AddCoins(_value);
+
+            Destroy(gameObject);
+        }
     }
 }
