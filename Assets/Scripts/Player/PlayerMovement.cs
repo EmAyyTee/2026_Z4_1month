@@ -90,7 +90,9 @@ namespace Player
 
         private void ReadJumpInput()
         {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.W) ||
+                Input.GetKeyDown(KeyCode.UpArrow) ||
+                Input.GetKeyDown(KeyCode.Space))
                 _jumpPressed = true;
         }
 
