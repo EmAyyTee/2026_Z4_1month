@@ -1,26 +1,30 @@
+using Game;
 using TMPro;
 using UnityEngine;
 
-public class GameOverPanelUI : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private TMP_Text _scoreText;
-
-    private void OnEnable()
+    public class GameOverPanelUI : MonoBehaviour
     {
-        if (_scoreText == null)
+        [SerializeField] private TMP_Text _scoreText;
+
+        private void OnEnable()
         {
-            Debug.LogError("Nie przypisano tekstu wyniku.", this);
-            return;
+            if (_scoreText == null)
+            {
+                Debug.LogError("Nie przypisano tekstu wyniku.", this);
+                return;
+            }
+
+            GameSession session = GameSession.Instance;
+
+            if (session == null)
+            {
+                _scoreText.text = "Score: 0";
+                return;
+            }
+
+            _scoreText.text = $"Score: {session.Score}";
         }
-
-        GameSession session = GameSession.Instance;
-
-        if (session == null)
-        {
-            _scoreText.text = "Score: 0";
-            return;
-        }
-
-        _scoreText.text = $"Score: {session.Score}";
     }
 }

@@ -1,54 +1,57 @@
 using System;
 using UnityEngine;
 
-public class GameSession : MonoBehaviour
+namespace Game
 {
-    public static GameSession Instance { get; private set; }
-
-    [SerializeField] private int _coins;
-    [SerializeField] private int _score;
-
-    public int Coins => _coins;
-    public int Score => _score;
-
-    public event Action StatsChanged;
-
-    private void Awake()
+    public class GameSession : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        public static GameSession Instance { get; private set; }
+
+        [SerializeField] private int _coins;
+        [SerializeField] private int _score;
+
+        public int Coins => _coins;
+        public int Score => _score;
+
+        public event Action StatsChanged;
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            _coins = 0;
+            _score = 0;
         }
 
-        Instance = this;
-        _coins = 0;
-        _score = 0;
-    }
+        public void AddCoins(int amount)
+        {
+            if (amount <= 0)
+                return;
 
-    public void AddCoins(int amount)
-    {
-        if (amount <= 0)
-            return;
+            _coins += amount;
+            _score += amount * 100;
 
-        _coins += amount;
-        _score += amount * 100;
+            StatsChanged?.Invoke();
+        }
 
-        StatsChanged?.Invoke();
-    }
+        public void AddScore(int amount)
+        {
+            if (amount <= 0)
+                return;
 
-    public void AddScore(int amount)
-    {
-        if (amount <= 0)
-            return;
+            _score += amount;
+            StatsChanged?.Invoke();
+        }
 
-        _score += amount;
-        StatsChanged?.Invoke();
-    }
-
-    private void OnDestroy()
-    {
-        if (Instance == this)
-            Instance = null;
+        private void OnDestroy()
+        {
+            if (Instance == this)
+                Instance = null;
+        }
     }
 }

@@ -1,36 +1,40 @@
+using Game;
 using TMPro;
 using UnityEngine;
 
-public class HUDManager : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private GameSession _session;
-    [SerializeField] private TMP_Text _coinsText;
-
-    private void OnEnable()
+    public class HUDManager : MonoBehaviour
     {
-        if (_session == null)
-            return;
+        [SerializeField] private GameSession _session;
+        [SerializeField] private TMP_Text _coinsText;
 
-        _session.StatsChanged += RefreshHUD;
-        RefreshHUD();
-    }
+        private void OnEnable()
+        {
+            if (_session == null)
+                return;
 
-    private void Start()
-    {
-        RefreshHUD();
-    }
+            _session.StatsChanged += RefreshHUD;
+            RefreshHUD();
+        }
 
-    private void OnDisable()
-    {
-        if (_session != null)
-            _session.StatsChanged -= RefreshHUD;
-    }
+        private void Start()
+        {
+            RefreshHUD();
+        }
 
-    private void RefreshHUD()
-    {
-        if (_session == null || _coinsText == null)
-            return;
+        private void OnDisable()
+        {
+            if (_session != null)
+                _session.StatsChanged -= RefreshHUD;
+        }
 
-        _coinsText.text = _session.Coins.ToString();
+        private void RefreshHUD()
+        {
+            if (_session == null || _coinsText == null)
+                return;
+
+            _coinsText.text = _session.Coins.ToString();
+        }
     }
 }
