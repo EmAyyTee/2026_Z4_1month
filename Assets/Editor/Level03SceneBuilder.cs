@@ -41,6 +41,7 @@ public static class Level03SceneBuilder
             camera.transform.position = new Vector3(4, 0.8f, -10);
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color32(222, 195, 151, 255);
+            GameplaySceneInstaller.ConfigureScene(scene);
             if (!EditorSceneManager.SaveScene(scene, Level03Bootstrapper.ScenePath))
                 throw new System.IO.IOException("Could not save Level03.");
         }

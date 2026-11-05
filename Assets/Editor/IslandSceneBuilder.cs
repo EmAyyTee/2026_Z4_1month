@@ -62,6 +62,7 @@ public static class IslandSceneBuilder
             camera.transform.position = new Vector3(4.5f, 2f, -10f);
             camera.backgroundColor = new Color32(222, 195, 151, 255);
             camera.clearFlags = CameraClearFlags.SolidColor;
+            GameplaySceneInstaller.ConfigureScene(scene);
             EditorSceneManager.SaveScene(scene, MapBootstrapper.ScenePath);
         }
         finally

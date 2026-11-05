@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Moving_Platform;
 using UnityEngine;
 
@@ -32,6 +33,7 @@ namespace Player
         private Animator _animator;
         private SpriteRenderer _spriteRenderer;
         private MovingPlatform _movingPlatform;
+        private readonly Dictionary<Collider2D, MovingPlatform> _supports = new Dictionary<Collider2D, MovingPlatform>();
 
         private int _jumpsRemaining;
 
@@ -73,6 +75,7 @@ namespace Player
 
         private void FixedUpdate()
         {
+            RefreshSupportState();
             HandleMovement();
             HandleJump();
         }
@@ -153,6 +156,7 @@ namespace Player
                 onSomething = false;
 
                 _movingPlatform = null;
+                _supports.Clear();
 
                 if (_animator != null)
                     _animator.SetTrigger(Jump);
@@ -213,101 +217,67 @@ namespace Player
             _animator.SetFloat(YVelocity, _rb.linearVelocity.y);
         }
 
-        // Wykrywanie platformy, na której stoi gracz.
-        private void CheckMovingPlatform(Collision2D collision)
+        private void TrackSupport(Collision2D collision)
         {
-            if (!collision.gameObject.CompareTag("Platform"))
-                return;
-
-            for (int i = 0; i < collision.contactCount; i++)
+            var other = collision.collider;
+            _supports.Remove(other);
+            bool walkable = other.CompareTag("Ground") || other.CompareTag("Box") || other.CompareTag("Platform");
+            float supportVelocity = collision.rigidbody != null ? collision.rigidbody.linearVelocity.y : 0f;
+            if (walkable && _rb.linearVelocity.y <= supportVelocity + 0.1f)
             {
-                ContactPoint2D contact = collision.GetContact(i);
-
-                // Normalna skierowana do góry oznacza,
-                // że gracz stoi na platformie.
-                if (contact.normal.y > 0.5f)
+                for (int i = 0; i < collision.contactCount; i++)
                 {
-                    _movingPlatform = collision.gameObject.GetComponent<MovingPlatform>();
-
-                    if (_movingPlatform != null)
-                    {
-                        onSomething = true;
-                        isGrounded = true;
-                        _jumpsRemaining = maxJumps;
-                    }
-                    return;
+                    if (collision.GetContact(i).normal.y <= 0.5f)
+                        continue;
+                    _supports[other] = other.GetComponent<MovingPlatform>();
+                    _jumpsRemaining = maxJumps;
+                    break;
                 }
             }
+            RefreshSupportState();
+        }
+
+        private void RefreshSupportState()
+        {
+            isGrounded = false;
+            onSomething = false;
+            _movingPlatform = null;
+            foreach (var support in _supports)
+            {
+                var collider = support.Key;
+                if (collider == null || !collider.enabled || !collider.gameObject.activeInHierarchy)
+                    continue;
+                isGrounded |= collider.CompareTag("Ground");
+                onSomething |= collider.CompareTag("Box") || collider.CompareTag("Platform");
+                if (support.Value != null)
+                    _movingPlatform = support.Value;
+            }
+            if (_movingPlatform != null)
+                isGrounded = true;
+        }
+
+        public bool IsTouchingGround()
+        {
+            foreach (var support in _supports.Keys)
+                if (support != null && support.enabled && support.gameObject.activeInHierarchy && support.CompareTag("Ground"))
+                    return true;
+            return false;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            CheckMovingPlatform(collision);
-
-            if (collision.gameObject.CompareTag("Ground"))
-            {
-                isGrounded = true;
-                _jumpsRemaining = maxJumps;
-            }
-
-            if (collision.gameObject.CompareTag("Box") || collision.gameObject.CompareTag("Platform"))
-            {
-                onSomething = true;
-                _jumpsRemaining = maxJumps;
-            }
+            TrackSupport(collision);
         }
-    
-    
-        public bool IsTouchingGround()
-        {
-            Collider2D playerCollider = GetComponent<Collider2D>();
 
-            if (playerCollider == null)
-                return false;
-
-            ContactFilter2D filter = new ContactFilter2D();
-            filter.useTriggers = false;
-
-            Collider2D[] results = new Collider2D[10];
-
-            int count = playerCollider.Overlap(filter, results);
-
-            for (int i = 0; i < count; i++)
-                if (results[i] != null && results[i].CompareTag("Ground"))
-                    return true;
-        
-            return false;
-        }
-    
         private void OnCollisionStay2D(Collision2D collision)
         {
-            CheckMovingPlatform(collision);
-
-            if (collision.gameObject.CompareTag("Ground"))
-                isGrounded = true;
-
-            if (collision.gameObject.CompareTag("Box"))
-                onSomething = true;
+            TrackSupport(collision);
         }
 
         private void OnCollisionExit2D(Collision2D collision)
         {
-            if (collision.gameObject.CompareTag("Ground"))
-                isGrounded = false;
-
-            if (collision.gameObject.CompareTag("Box"))
-                onSomething = false;
-
-            if (collision.gameObject.CompareTag("Platform"))
-            {
-                MovingPlatform platform = collision.gameObject.GetComponent<MovingPlatform>();
-
-                if (_movingPlatform == platform)
-                {
-                    _movingPlatform = null;
-                    onSomething = false;
-                }
-            }
+            _supports.Remove(collision.collider);
+            RefreshSupportState();
         }
     }
 }

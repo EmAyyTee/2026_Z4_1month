@@ -51,6 +51,7 @@ namespace Player
         private bool IsInvulnerable => _invulnerabilityTimer > 0f;
 
         public bool IsDead => _isDead;
+        public int CurrentHealth => _currentHealth;
 
         private void Awake()
         {

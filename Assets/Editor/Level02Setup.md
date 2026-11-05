@@ -8,7 +8,7 @@ Układ opiera się na rysunku w sekcji **Level II** załączonego GDD (rysunek o
 
 W `Window > 2D > Tile Palette` wybierz istniejącą paletę `IslandTerrainPalette`. Maluj ziemię na `Ground`, a cienkie drewniane pomosty na `Platforms`. Reguły dobierają krawędzie. Obie warstwy mają Tilemap Collider 2D, Composite Collider 2D, Static Rigidbody2D i tag Ground. `Background`, `Decorations` i `Foreground` rozdzielają tło i ozdoby bez kolizji.
 
-Jedna komórka ma 0,32 jednostki świata. `Environment` i `DynamicObstacles` zapewniają tę skalę; dzieci powinny zachować lokalną skalę 1.
+Jedna komórka ma 1 jednostkę świata, tak jak w poziomach Krystiana. `Environment` i `DynamicObstacles` mają skalę 1; dzieci powinny zachować lokalną skalę 1.
 
 ## Przeszkody
 
@@ -21,7 +21,7 @@ Nowe prefaby są w `Assets/Prefabs/Level02`. Grafiki kolców, wody, nieba i ła�
 
 ## Integracja rozgrywki
 
-Tak jak Level01, scena nie zawiera jeszcze gracza ani kamery śledzącej. `LevelMarkers` zawiera `PlayerSpawn`, `LevelExit`, `MeleeTutorial`, `BossEncounter`, `UpperLookout` oraz punkty dla przeciwników. Są to miejsca integracji, nie działający tutorial, przeciwnicy ani boss. Skrzynie są punktami orientacyjnymi. System monet, kluczy, przejścia poziomu i blokowania wyjścia pozostaje do podłączenia.
+Scena zawiera wspólny `GameplayRig` z graczem i kamerą Cinemachine. Sterowanie opisuje `GameplaySetup.md`. `LevelMarkers` zawiera `PlayerSpawn`, `LevelExit`, `MeleeTutorial`, `BossEncounter`, `UpperLookout` oraz punkty dla przeciwników. Tutorial, przeciwnicy i boss wymagają podłączenia. Skrzynie są punktami orientacyjnymi. System monet, kluczy, przejścia poziomu i blokowania wyjścia pozostaje do podłączenia.
 
 ## Generator i sprawdzanie
 

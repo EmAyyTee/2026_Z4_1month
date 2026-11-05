@@ -41,6 +41,7 @@ public static class Level02SceneBuilder
             camera.transform.position = new Vector3(4f, 0.8f, -10);
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color32(222, 195, 151, 255);
+            GameplaySceneInstaller.ConfigureScene(scene);
             EditorSceneManager.SaveScene(scene, Level02Bootstrapper.ScenePath);
         }
         finally

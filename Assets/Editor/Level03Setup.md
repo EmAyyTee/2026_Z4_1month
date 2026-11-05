@@ -4,13 +4,13 @@ Scena: `Assets/Scenes/Scene03/Level03.unity`.
 
 Mapa odtwarza główne obszary szkicu Level III: dolny korytarz ze startem po lewej (1), zygzak platform po prawej (2), prawą komnatę ze skrzynią (3), pochyłe wybrzeże (4), zachodni filar (5), jamę z kolcami (6), środkową galerię powrotną (7), korytarz pod skałami (8), górną galerię (9) oraz płaską arenę bossa (10). `LevelMarkers/GDDSections` pozwala znaleźć te miejsca w Hierarchy.
 
-Rysunek nie ma skali. Odległości dopasowano do ruchu postaci w projekcie: prędkości 3, skoku 3 i dwóch skoków przy standardowej grawitacji. Duże różnice wysokości obsługują windy. Przy dolnym podejściu najpierw należy wejść na `LowerHallFerry`, a następnie przeskoczyć na drewniane pomosty. Trasa zawiera powroty, boczne skrzynie i dwa wejścia na arenę. Do pełnego wyważenia potrzebne jest przejście mapy docelową postacią.
+Rysunek nie ma skali. Mapa używa teraz wspólnego gracza Krystiana: prędkości 3, siły skoku 8 i dwóch skoków. Duże różnice wysokości obsługują windy. Przy dolnym podejściu można wejść na `LowerHallFerry`, a następnie przeskoczyć na drewniane pomosty. Trasa zawiera powroty, boczne skrzynie i dwa wejścia na arenę. Do pełnego wyważenia potrzebne jest przejście całej mapy postacią.
 
 ## Warstwy i edycja
 
 `Environment/Grid` zawiera `Ground`, `Platforms`, `Background`, `Decorations` i `Foreground`. Ziemia ma trawiastą powierzchnię i skalne wypełnienie, a pomosty osobne drewniane grafiki. Ziemię i pomosty można malować istniejącą paletą `IslandTerrainPalette` w `Window > 2D > Tile Palette`. Reguły automatycznie dobierają krawędzie.
 
-`Ground` i `Platforms` mają Tilemap Collider 2D, Composite Collider 2D, Static Rigidbody2D oraz tag Ground. Pozostałe warstwy służą grafice. Jedna komórka odpowiada 0,32 jednostki świata; skala jest ustawiona na korzeniach `Environment` i `DynamicObstacles`.
+`Ground` i `Platforms` mają Tilemap Collider 2D, Composite Collider 2D, Static Rigidbody2D oraz tag Ground. Pozostałe warstwy służą grafice. Jedna komórka odpowiada 1 jednostce świata; `Environment` i `DynamicObstacles` mają skalę 1 zgodną z poziomami Krystiana.
 
 ## Przeszkody
 
@@ -24,7 +24,7 @@ Grafiki, materiały i pozostałe prefaby są współdzielone z poprzednimi mapam
 
 ## Integracja rozgrywki
 
-Tak jak w poprzednich mapach, scena zawiera mapę i statyczną kamerę, bez gracza ani kamery śledzącej. `PlayerSpawn`, `RangedTutorial`, `EnemySpawnMarkers`, `BossEncounter`, `BarricadeLower`, `BarricadeUpper`, `SecretReward` i `LevelExit` są punktami do podłączenia systemów gry. Skrzynie pełnią funkcję dekoracyjną. Nie dodano przeciwników, bossa, tutorialu strzelania, nagród ani blokad przejścia.
+Scena zawiera wspólny `GameplayRig` z graczem i kamerą Cinemachine. Sterowanie opisuje `GameplaySetup.md`. `PlayerSpawn` wskazuje miejsce startu. `RangedTutorial`, `EnemySpawnMarkers`, `BossEncounter`, `BarricadeLower`, `BarricadeUpper`, `SecretReward` i `LevelExit` są punktami do podłączenia systemów gry. Skrzynie pełnią funkcję dekoracyjną. Przeciwnicy, boss, tutorial strzelania, nagrody i blokady przejścia wymagają podłączenia.
 
 W dostępnych materiałach nie ma grafiki portalu. Jego położenie wskazują `ExitPortal` oraz istniejąca flaga `PortalLocationFlag` na prawym końcu areny. Portal i przejście do kolejnej sceny wymagają osobnego podłączenia.
 
