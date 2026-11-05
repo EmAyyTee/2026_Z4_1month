@@ -230,7 +230,7 @@ MonoBehaviour:
   knockbackForce: 2
   knockbackUpward: 1
   knockbackDuration: 0.5
-  minimumFallHeight: 1
+  minimumFallHeight: 5
   fallDamagePerUnit: 10
   healthBar: {fileID: 0}
   deathScreen: {fileID: 0}
