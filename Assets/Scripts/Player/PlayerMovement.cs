@@ -122,9 +122,7 @@ namespace Player
             float velocityX = direction * currentSpeed + platformVelocity.x;
 
             float velocityY = _rb.linearVelocity.y;
-
-            // Przenoszenie gracza razem z platformą.
-            // Nie nadpisujemy prędkości pionowej, jeśli gracz skacze.
+            
             if (standingOnPlatform && _rb.linearVelocity.y <= 0f)
                 velocityY = platformVelocity.y;
         
@@ -211,7 +209,7 @@ namespace Player
             _animator.SetFloat(YVelocity, _rb.linearVelocity.y);
         }
 
-        // Wykrywanie platformy, na której stoi gracz.
+        // Wykrywanie platformy na, której stoi gracz.
         private void CheckMovingPlatform(Collision2D collision)
         {
             if (!collision.gameObject.CompareTag("Platform"))
@@ -263,8 +261,7 @@ namespace Player
             if (playerCollider == null)
                 return false;
 
-            ContactFilter2D filter = new ContactFilter2D();
-            filter.useTriggers = false;
+            ContactFilter2D filter = new ContactFilter2D { useTriggers = false };
 
             Collider2D[] results = new Collider2D[10];
 

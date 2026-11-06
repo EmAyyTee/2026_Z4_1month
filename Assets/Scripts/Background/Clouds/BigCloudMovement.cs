@@ -4,6 +4,7 @@ namespace Background.Clouds
 {
     public class CloudMovement : MonoBehaviour
     {
+        [Header("Speed")]
         public float speed = 1f;
 
         private float _width;

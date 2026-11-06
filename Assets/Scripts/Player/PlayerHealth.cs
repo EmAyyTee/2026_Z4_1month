@@ -140,7 +140,7 @@ namespace Player
             if (damage <= 0)
                 return;
         
-            // Jeżeli obrażenia są większe niż aktualne życie mamy śmierć od upadku.
+            // Jeżeli obrażenia są większe niż aktualne życie, mamy śmierć od upadku.
             if (damage >= _currentHealth)
             {
                 Die(true);

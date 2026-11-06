@@ -14,12 +14,12 @@ namespace Trigger
 
         public void SpawnEnemy()
         {
-            // Zabezpieczenie żeby beczka nie pojawiła się więcej niż raz
+            // Zabezpieczenie, żeby beczka nie pojawiła się więcej niż raz
             if (_hasSpawned || enemyPrefab == null)
                 return;
 
             // Tworzy kopię obiektu w wyznaczonym miejscu, bez żadnego obrotu/rotacji (Quaternion.identity)
-            Instantiate(enemyPrefab, new Vector3(spawnPosition.x, spawnPosition.y, 0f), Quaternion.identity);
+            Instantiate(enemyPrefab, new Vector2(spawnPosition.x, spawnPosition.y), Quaternion.identity);
 
             _hasSpawned = true;
         }

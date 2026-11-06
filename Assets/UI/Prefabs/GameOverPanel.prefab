@@ -836,6 +836,7 @@ GameObject:
   - component: {fileID: 4149064261906985034}
   - component: {fileID: 636798886169713454}
   - component: {fileID: 1257558143164790195}
+  - component: {fileID: 1053095685058923553}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -944,4 +945,28 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 636798886169713454}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1053095685058923553}
+        m_TargetAssemblyTypeName: RestartGame, Assembly-CSharp
+        m_MethodName: Restart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1053095685058923553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7694845278578474937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3193121ced8b2943afa98ae81b09737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RestartGame

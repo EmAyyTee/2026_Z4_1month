@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1182895102705014900}
   - component: {fileID: 6167446659950174076}
   - component: {fileID: 5381975671228118209}
+  - component: {fileID: 5546580824101835415}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Enemy
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 9
   m_MaskInteraction: 0
   m_Sprite: {fileID: -5225540622116197949, guid: 58175c61aa5b22d45a4efa7c92681b5e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -156,3 +157,16 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.115
+--- !u!114 &5546580824101835415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861703234174822362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b7dd63808c9134a833f4a4be2ede88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BarrelAttack
+  movementThreshold: 0.05

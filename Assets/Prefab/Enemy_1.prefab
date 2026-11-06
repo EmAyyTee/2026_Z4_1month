@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2234395700035736041}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.655, y: -0.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
   knockbackUpward: 1
   knockbackDuration: 0.2
   minimumFallHeight: 1
-  fallDamagePerUnit: 1000000
+  fallDamagePerUnit: 10
   healthBar: {fileID: 1126733363567219925}
 --- !u!114 &2922059283242077123
 MonoBehaviour:
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   attackRange: 0.2
   attackCooldown: 1.1
-  damage: 10
+  damage: 30
 --- !u!1 &3709066552123069861
 GameObject:
   m_ObjectHideFlags: 0

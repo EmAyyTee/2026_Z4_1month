@@ -4,33 +4,29 @@ namespace Ship
 {
     public class ShipScale : MonoBehaviour
     {
+        [Header("Player")]
         public Transform player;
 
-        [Header("Scaling")]
-        public float scaleIncrease = 0.1f;
-        public float smoothSpeed = 3f;
-
-        [Header("Vertical Follow")]
-        public float followFactor = 0.3f;
-
-        [Header("Position Correction")]
-        public float scaleCorrection = 0.5f;
+        [Header("Fixed Position")]
+        public float fixedX = 8f;
 
         private float _startPlayerY;
         private float _startShipY;
-        private Vector3 _initialScale;
 
         void Start()
         {
-            if (player == null)
-            {
-                enabled = false;
-                return;
-            }
+            enabled = false;
+        }
 
+        public void Activate()
+        {
+            if (player == null)
+               return;
+            
             _startPlayerY = player.position.y;
             _startShipY = transform.position.y;
-            _initialScale = transform.localScale;
+
+            enabled = true;
         }
 
         void LateUpdate()
@@ -40,28 +36,18 @@ namespace Ship
 
             float difference = player.position.y - _startPlayerY;
 
-            float smooth = 1f - Mathf.Exp(-smoothSpeed * Time.deltaTime);
+            float smooth = 1f - Mathf.Exp(-100 * Time.deltaTime);
 
-            // 1. Skalowanie statku
-            float scaleMultiplier = 1f + difference * scaleIncrease;
-            scaleMultiplier = Mathf.Max(0.01f, scaleMultiplier);
-
-            Vector3 targetScale = _initialScale * scaleMultiplier;
-
-            transform.localScale = Vector3.Lerp(transform.localScale, targetScale, smooth);
-
-            // 2. Podążanie za graczem - tak jak HorizonZoom
-            float targetY = _startShipY + difference * followFactor;
-
-            // 3. Korekta wysokości wynikająca z powiększania
-            float scaleDifference = transform.localScale.y - _initialScale.y;
-
-            targetY += scaleDifference * scaleCorrection;
+            float targetY;
+            
+            if (player.position.y >= 10f)
+                targetY = _startShipY + difference * 1;
+            else
+                targetY = player.position.y;
 
             float newY = Mathf.Lerp(transform.position.y, targetY, smooth);
 
-            // Nie zmieniamy X ani Z
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+            transform.position = new Vector3(fixedX, newY, transform.position.z);
         }
     }
 }

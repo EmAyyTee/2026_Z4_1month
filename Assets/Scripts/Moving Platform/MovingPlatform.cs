@@ -5,22 +5,19 @@ namespace Moving_Platform
     [RequireComponent(typeof(Rigidbody2D))]
     public class MovingPlatform : MonoBehaviour
     {
-        public enum MoveDirection
-        {
-            Horizontal,
-            Vertical
-        }
+        public enum MoveDirection { Horizontal, Vertical }
 
         [Header("Movement")]
         public MoveDirection direction = MoveDirection.Vertical;
         public float distance = 3f;
         public float speed = 2f;
-
-        public Vector2 CurrentVelocity { get; private set; }
-
+        
         private Rigidbody2D _rb;
         private Vector2 _startPosition;
         private Vector2 _previousPosition;
+        private Vector2 _currentVelocity;
+        
+        public Vector2 CurrentVelocity => _currentVelocity;
 
         private void Awake()
         {
@@ -47,7 +44,7 @@ namespace Moving_Platform
 
             _rb.MovePosition(target);
 
-            CurrentVelocity = (target - _previousPosition) / Time.fixedDeltaTime;
+            _currentVelocity = (target - _previousPosition) / Time.fixedDeltaTime;
 
             _previousPosition = target;
         }

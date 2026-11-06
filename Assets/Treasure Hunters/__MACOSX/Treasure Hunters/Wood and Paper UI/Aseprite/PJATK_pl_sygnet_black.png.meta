@@ -1,10 +1,82 @@
 fileFormatVersion: 2
-guid: af03968e9039e1e4cba2a2ddbbab8cdc
+guid: 7510147ad301c5340bb23f5f8b24e81b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5848424107116918047
-    second: Zrzut ekranu 2026-10-26 143035_0
+      213: -7357126196026294706
+    second: PJATK_pl_sygnet_black_0
+  - first:
+      213: -6711162372969997619
+    second: PJATK_pl_sygnet_black_1
+  - first:
+      213: 6364483875561607787
+    second: PJATK_pl_sygnet_black_2
+  - first:
+      213: 2336314420069749653
+    second: PJATK_pl_sygnet_black_3
+  - first:
+      213: 5812220905190445878
+    second: PJATK_pl_sygnet_black_4
+  - first:
+      213: -3216035529392992313
+    second: PJATK_pl_sygnet_black_5
+  - first:
+      213: -3291169308957438182
+    second: PJATK_pl_sygnet_black_6
+  - first:
+      213: -5490335132359652160
+    second: PJATK_pl_sygnet_black_7
+  - first:
+      213: -1147693608021264090
+    second: PJATK_pl_sygnet_black_8
+  - first:
+      213: -2816495357405463504
+    second: PJATK_pl_sygnet_black_9
+  - first:
+      213: 3960996756449839835
+    second: PJATK_pl_sygnet_black_10
+  - first:
+      213: -4032944641423449761
+    second: PJATK_pl_sygnet_black_11
+  - first:
+      213: -440047897813472703
+    second: PJATK_pl_sygnet_black_12
+  - first:
+      213: 1025244161065522157
+    second: PJATK_pl_sygnet_black_13
+  - first:
+      213: -1789804529419470153
+    second: PJATK_pl_sygnet_black_14
+  - first:
+      213: 4624801344268830367
+    second: PJATK_pl_sygnet_black_15
+  - first:
+      213: 675265322072979569
+    second: PJATK_pl_sygnet_black_16
+  - first:
+      213: 8169402350237881977
+    second: PJATK_pl_sygnet_black_17
+  - first:
+      213: -138328835645077714
+    second: PJATK_pl_sygnet_black_18
+  - first:
+      213: -8924766013435422966
+    second: PJATK_pl_sygnet_black_19
+  - first:
+      213: 4841422347189779584
+    second: PJATK_pl_sygnet_black_20
+  - first:
+      213: -5230185864337565092
+    second: PJATK_pl_sygnet_black_21
+  - first:
+      213: 2090123357980627566
+    second: PJATK_pl_sygnet_black_22
+  - first:
+      213: 1920522831997706137
+    second: PJATK_pl_sygnet_black_23
+  - first:
+      213: 3863763942509735549
+    second: PJATK_pl_sygnet_black_24
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +172,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Zrzut ekranu 2026-10-26 143035_0
+      name: PJATK_pl_sygnet_black_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1377
-        height: 1046
+        width: 1028
+        height: 1032
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f15f8883db6c92150800000000000000
-      internalID: 5848424107116918047
+      spriteID: e4eb12654bc36e990800000000000000
+      internalID: -7357126196026294706
       vertices: []
       indices: 
       edges: []
@@ -125,7 +197,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 0ea99c35b6fb7db4f9bde2a54fb39256
     internalID: 0
     vertices: []
     indices: 
@@ -133,9 +205,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":1028.0,"y":1032.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Zrzut ekranu 2026-10-26 143035_0: 5848424107116918047
+      PJATK_pl_sygnet_black_0: -7357126196026294706
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

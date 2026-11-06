@@ -1,41 +1,53 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Ship.Cannon_Ball
 {
     public class CannonBallSpawner : MonoBehaviour
     {
-        [Header("References")]
-        public GameObject cannonBallPrefab;
-        public GameObject reflectableCannonBallPrefab;
+        [Header("Player")]
         public Transform player;
 
+        [Header("Cannon Balls")]
+        public GameObject cannonBallPrefab;
+        public GameObject reflectableCannonBallPrefab;
+
         [Header("Cannon Visuals")]
-        public GameObject cannon;
-        [FormerlySerializedAs("cannon_2")] public GameObject cannon2;
-        public float shootAnimationDuration = 0.5f;
+        public GameObject cannonShoot;
+        public GameObject cannonReload;
 
         [Header("Spawn Position")]
-        public float spawnHeight = 8f;
-        public float minX = -5f;
-        public float maxX = 5f;
+        public float spawnHeight = 14f;
+        public float minX = -4f;
+        public float maxX = 4f;
 
         [Header("Spawn Settings")]
         public float spawnInterval = 1.5f;
-        public int cannonBallCount = 10;
 
         [Header("Special CannonBall")]
-        public int reflectableBallInterval = 5;
+        public int reflectableBallInterval = 5; // Co ile pojawia się czerwona kula armatnia
 
+        private BossHealth _bossHealth;
+        
         private float _spawnTimer;
         private int _spawnedBalls;
         private bool _isSpawning;
         private bool _isShooting;
         private bool _isPaused;
 
+        private void Awake()
+        {
+            _bossHealth = FindFirstObjectByType<BossHealth>();
+        }
+        
         private void Update()
         {
+            if (_bossHealth != null && _bossHealth.IsDead)
+            {
+                StopSpawning();
+                return;
+            }
+            
             if (!_isSpawning || _isPaused)
                 return;
 
@@ -52,7 +64,7 @@ namespace Ship.Cannon_Ball
             _isSpawning = true;
         }
 
-        public void StopSpawning()
+        private void StopSpawning()
         {
             _isSpawning = false;
         }
@@ -72,34 +84,28 @@ namespace Ship.Cannon_Ball
             _isShooting = true;
         
             // Animacja wystrzału.
-            if (cannon != null) cannon.SetActive(false);
-
-            if (cannon2 != null) cannon2.SetActive(true);
+            if (cannonShoot != null) cannonShoot.SetActive(false);
+            if (cannonReload != null) cannonReload.SetActive(true);
 
             // Powrót do normalnego wyglądu armaty.
-            if (cannon != null) cannon.SetActive(true);
+            if (cannonShoot != null) cannonShoot.SetActive(true);
+            if (cannonReload != null) cannonReload.SetActive(false);
         
-            if (cannon2 != null) cannon2.SetActive(false);
-        
-            yield return new WaitForSeconds(shootAnimationDuration);
+            yield return new WaitForSeconds(0.25f);
         
             // Jeśli boss otrzymał obrażenia, czekamy z wystrzałem.
-            while (_isPaused)
-                yield return null;
+            while (_isPaused) yield return null;
         
-            if (cannon != null) cannon.SetActive(false);
-
-            if (cannon2 != null) cannon2.SetActive(true);
+            // Animacja wystrzału.
+            if (cannonShoot != null) cannonShoot.SetActive(false);
+            if (cannonReload != null) cannonReload.SetActive(true);
             
             // Spawn kuli.
             SpawnCannonBall();
 
             _spawnedBalls++;
             _spawnTimer = spawnInterval;
-
-            if (_spawnedBalls >= cannonBallCount)
-                StopSpawning();
-
+            
             _isShooting = false;
         }
 

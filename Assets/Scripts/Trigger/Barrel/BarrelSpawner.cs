@@ -14,7 +14,7 @@ namespace Trigger.Barrel
 
         public void SpawnBarrel()
         {
-            // Zabezpieczenie żeby beczka nie pojawiła się więcej niż raz
+            // Zabezpieczenie, żeby beczka nie pojawiła się więcej niż raz
             if (_hasSpawned || barrelPrefab == null)
                 return;
         

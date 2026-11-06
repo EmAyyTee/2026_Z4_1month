@@ -25,13 +25,17 @@ namespace Ship
         public GameObject cannonIdle;
         public GameObject cannonHit;
         public GameObject sailHit;
+
+        [Header("Ship")]
+        public Transform ship;
+        public ShipScale shipScale;
+        public ShipZoom shipZoom;
         
         private SpriteRenderer[] _spriteRenderers;
         private CannonBallSpawner _cannonBallSpawner;
 
         private bool _isMoving;
         private bool _online = true;
-        private bool _shipLocked;
 
         void Start()
         {
@@ -70,16 +74,19 @@ namespace Ship
         {
             _online = false;
             _isMoving = true;
+
+            if (healthBar != null) healthBar.SetActive(true);
             
+            // Przejście ze stanu No_wind do stanu Wind
             if (sail != null) sail.SetActive(false);
             if (toWind != null) toWind.SetActive(true);
-            if (healthBar != null) healthBar.SetActive(true);
 
             yield return new WaitForSeconds(0.25f);
 
             if (toWind != null) toWind.SetActive(false);
             if (wind != null) wind.SetActive(true);
 
+            // Przejście z lewej do prawej strony
             float moved = 0f;
 
             while (moved < moveDistance)
@@ -94,20 +101,26 @@ namespace Ship
 
             transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
 
-            _shipLocked = true;
             _isMoving = false;
+            
+            // Odłączenie statku i wyłączenie skalowania
+            if (shipScale != null)
+            {
+                ship.transform.SetParent(null, true);
+                shipScale.Activate();
+                if (shipZoom != null)
+                    shipZoom.active = true;
+            }
 
+            // Wyłączenie sprite armaty celującej w prawo
             if (cannonIdle != null) cannonIdle.SetActive(false);
 
-            UpdateFacingDirection();
-
-            if (_cannonBallSpawner != null) _cannonBallSpawner.StartSpawning();
-        }
-
-        private void UpdateFacingDirection()
-        {
+            // Odwrócenie wszystkich rzeczy na statku
             foreach (SpriteRenderer sr in _spriteRenderers)
                 sr.flipX = !sr.flipX;
+
+            // Rozpoczęcie ostrzału
+            if (_cannonBallSpawner != null) _cannonBallSpawner.StartSpawning();
         }
     }
 }

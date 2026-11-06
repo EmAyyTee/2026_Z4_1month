@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3974081553093274935}
   - component: {fileID: 2897597811049627025}
   - component: {fileID: 7212735888310806450}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CannonBall
-  m_TagString: Untagged
+  m_TagString: CannonBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 8
   m_MaskInteraction: 0
   m_Sprite: {fileID: -855298285791758126, guid: 64be442db4c53a844a60cb6c4d59cbd9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -169,10 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ecd4c432106ce446b19b81c268ce522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CannonBall
-  fallSpeed: 0.01
-  reflectedSpeed: 9
-  explosionRadius: 0.3
-  explosionDamage: 15
-  explosionPrefab: {fileID: 0}
-  bossDamage: 20
-  reflectionUpForce: 3
+  canBeReflected: 0
+  explosionPrefab: {fileID: 9189600883959353100, guid: 819e61f333a779e4e98f7653271d73d6, type: 3}
+  damageToPlayer: 20
+  damageToBoss: 0

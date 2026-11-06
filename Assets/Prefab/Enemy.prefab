@@ -60,7 +60,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &2198439964015457908
 MonoBehaviour:
@@ -188,7 +188,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 9
   m_MaskInteraction: 0
   m_Sprite: {fileID: -603743758496190426, guid: 69fe24804b1e5754d9d6d79acc696514, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -328,7 +328,7 @@ MonoBehaviour:
   knockbackUpward: 1
   knockbackDuration: 0.2
   minimumFallHeight: 1
-  fallDamagePerUnit: 1000000
+  fallDamagePerUnit: 10
   healthBar: {fileID: 7385804138044724176}
 --- !u!114 &3433531538349787539
 MonoBehaviour:
@@ -342,9 +342,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df37bf1dd15f5724a97537ea4de91b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
-  attackRange: 0.17
+  attackRange: 0.2
   attackCooldown: 1.1
-  damage: 10
+  damage: 30
 --- !u!1001 &7066367865669307225
 PrefabInstance:
   m_ObjectHideFlags: 0

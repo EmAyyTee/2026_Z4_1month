@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace Moving_Platform
 {
-    [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(MovingPlatform))]
     public class MovingPlatformAttack : MonoBehaviour
     {
-        private MovingPlatform _platform;
-
         [Header("Deadly Height")]
         [SerializeField] private float deadlyHeight = 3f;
+
+        private MovingPlatform _platform;
 
         private void Awake()
         {

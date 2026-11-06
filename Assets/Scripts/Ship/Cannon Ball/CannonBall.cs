@@ -5,43 +5,26 @@ namespace Ship.Cannon_Ball
 {
     public class CannonBall : MonoBehaviour
     {
-        [Header("Movement")]
-        public float fallSpeed = 5f;
-
-        [Header("Explosion")]
-        public float explosionRadius = 1.5f;
-        public int explosionDamage = 15;
-        public GameObject explosionPrefab;
-        public float explosionAnimationDuration = 0.8f;
-
         [Header("Reflection")]
         public bool canBeReflected;
-        public int bossDamage = 20;
-    
-        public float knockbackForce = 1.5f;
-        public float knockbackUpward = 1.5f;
 
-        [Range(30f, 80f)]
-        public float reflectionAngle = 60f;
-    
-        [Header("Health")]
-        public int maxHealth = 100;
-    
-        [Header("Moon Physics")]
-        public float moonGravity = 0.15f;
-        public float moonReflectionSpeed = 6f;
+        [Header("BOOM")]
+        public GameObject explosionPrefab;
+
+        [Header("Damage")]
+        public int damageToPlayer = 15;
+        public int damageToBoss = 20;
 
         private Rigidbody2D _rb;
+        private BossHealth _bossHealth;
+        
         private bool _isReflected;
         private bool _hasExploded;
-
-        private BossHealth _bossHealth;
-    
+        
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
 
-            // Pobieramy bossa już na początku.
             GameObject boss = GameObject.FindGameObjectWithTag("Boss");
 
             if (boss != null)
@@ -51,12 +34,12 @@ namespace Ship.Cannon_Ball
         private void Start()
         {
             if (_rb != null)
-                _rb.linearVelocity = Vector2.down * fallSpeed;
+                _rb.linearVelocity = Vector2.down * 0.1f;
         }
     
         private BossHealth FindBossHealth()
         {
-            // Szukamy wszystkich komponentów BossHealth
+            // Szuka wszystkich bosshealth
             BossHealth[] bosses = FindObjectsByType<BossHealth>(FindObjectsSortMode.None);
 
             foreach (BossHealth boss in bosses)
@@ -74,7 +57,7 @@ namespace Ship.Cannon_Ball
             if (damage <= 0)
                 return;
         
-            // Odbicie kuli w stronę bossa.
+            // Odbicie kuli w stronę bossa
             Reflect(attacker);
         }
 
@@ -90,19 +73,19 @@ namespace Ship.Cannon_Ball
 
             _isReflected = true;
 
-            // Kierunek w stronę bossa.
+            // Kierunek
             float horizontalDirection = Mathf.Sign(_bossHealth.transform.position.x - transform.position.x);
 
             if (horizontalDirection == 0)
                 horizontalDirection = 1f;
 
-            // Kąt odbicia.
-            float angleRadians = reflectionAngle * Mathf.Deg2Rad;
+            // Kąt odbicia
+            float angleRadians = 80f * Mathf.Deg2Rad;
 
-            // Nowa prędkość początkowa.
-            Vector2 velocity = new Vector2(horizontalDirection * Mathf.Cos(angleRadians), Mathf.Sin(angleRadians)) * moonReflectionSpeed;
+            // Nowa prędkość początkowa
+            Vector2 velocity = new Vector2(horizontalDirection * Mathf.Cos(angleRadians), Mathf.Sin(angleRadians)) * 1;
 
-            // Dodatkowy knockback.
+            // Dodatkowy knockback
             if (attacker != null)
             {
                 float knockbackDirection = Mathf.Sign(transform.position.x - attacker.position.x);
@@ -110,17 +93,17 @@ namespace Ship.Cannon_Ball
                 if (knockbackDirection == 0)
                     knockbackDirection = horizontalDirection;
 
-                velocity += new Vector2(knockbackDirection * knockbackForce, knockbackUpward);
+                velocity += new Vector2(knockbackDirection * 0.5f, 1.5f);
             }
 
-            // Fizykę ustawiamy jak na Księżycu.
-            _rb.gravityScale = moonGravity;
+            // Ustawienie fizyki
+            _rb.gravityScale = 0.15f;
 
-            // Zerujemy poprzedni ruch.
+            // Zerujemy poprzedni ruch
             _rb.linearVelocity = Vector2.zero;
             _rb.angularVelocity = 0f;
 
-            // Nadajemy nową prędkość.
+            // Nadajemy nową prędkość
             _rb.linearVelocity = velocity;
         }
 
@@ -135,7 +118,7 @@ namespace Ship.Cannon_Ball
                 _bossHealth = FindBossHealth();
 
             if (_bossHealth != null && !_bossHealth.IsDead)
-                _bossHealth.TakeDamage(bossDamage, transform);
+                _bossHealth.TakeDamage(damageToBoss, transform);
         
             Destroy(gameObject);
         }
@@ -156,10 +139,10 @@ namespace Ship.Cannon_Ball
                 if (animator != null)
                     animator.Play(0, 0, 0f);
 
-                Destroy(explosion, explosionAnimationDuration);
+                Destroy(explosion, 0.5f);
             }
 
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 0.3f);
 
             foreach (Collider2D hit in hits)
             {
@@ -169,7 +152,7 @@ namespace Ship.Cannon_Ball
                 PlayerHealth playerHealth = hit.GetComponentInParent<PlayerHealth>();
 
                 if (playerHealth != null && !playerHealth.IsDead)
-                    playerHealth.TakeDamage(explosionDamage, transform);
+                    playerHealth.TakeDamage(damageToPlayer, transform);
             }
             Destroy(gameObject);
         }
@@ -192,7 +175,7 @@ namespace Ship.Cannon_Ball
 
             BossHealth boss = other.GetComponentInParent<BossHealth>();
 
-            // Boss otrzymuje obrażenia WYŁĄCZNIE od odbitej kuli.
+            // Boss otrzymuje obrażenia tylko od odbitej kuli
             if (boss != null)
             {
                 if (_isReflected)
@@ -203,7 +186,7 @@ namespace Ship.Cannon_Ball
                 return;
             }
 
-            // Kontakt z graczem.
+            // Kontakt z graczem
             if (other.CompareTag("Player"))
             {
                 if (!canBeReflected)
@@ -230,7 +213,7 @@ namespace Ship.Cannon_Ball
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, explosionRadius);
+            Gizmos.DrawWireSphere(transform.position, 0.3f);
         }
     }
 }

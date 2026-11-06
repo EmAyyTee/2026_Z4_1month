@@ -6,10 +6,8 @@ namespace Trigger.Barrel
     [RequireComponent(typeof(Rigidbody2D))]
     public class BarrelHazard : MonoBehaviour
     {
-        [Header("Movement Detection")]
-        public float movementThreshold = 0.05f;
-
         private Rigidbody2D _rb;
+            
         private bool _stopped;
 
         private void Awake()
@@ -22,11 +20,11 @@ namespace Trigger.Barrel
         {
             if (_rb.linearVelocity.sqrMagnitude == 0) _stopped = true;
         
-            return _rb.linearVelocity.sqrMagnitude > movementThreshold * movementThreshold;
+            return _rb.linearVelocity.sqrMagnitude > 0.025f;
         }
         private void CheckPlayer(Collider2D other)
         {
-            // Jeśli beczka stoi, nie zadaje obrażeń.
+            // Jeśli beczka stanie, nie zada obrażeń
             if (!IsMoving() || _stopped)
                 return;
 
@@ -39,11 +37,6 @@ namespace Trigger.Barrel
         }
     
         private void OnCollisionEnter2D(Collision2D collision)
-        {
-            CheckPlayer(collision.collider);
-        }
-
-        private void OnCollisionStay2D(Collision2D collision)
         {
             CheckPlayer(collision.collider);
         }

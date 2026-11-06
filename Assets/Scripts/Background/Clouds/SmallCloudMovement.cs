@@ -4,11 +4,11 @@ namespace Background.Clouds
 {
     public class SmallCloudMovement : MonoBehaviour
     {
-        public float speed = 1f;
+        [Header("Camera")]
         public Camera cam;
-
-        public float leftOffset = 12f;
-        public float rightOffset = 12f;
+        
+        [Header("Speed")]
+        public float speed = 1f;
 
         void Start()
         {
@@ -20,8 +20,8 @@ namespace Background.Clouds
         {
             transform.Translate(Vector3.left * (speed * Time.deltaTime));
 
-            float leftLimit = cam.transform.position.x - leftOffset;
-            float rightLimit = cam.transform.position.x + rightOffset;
+            float leftLimit = cam.transform.position.x - 4.5f;
+            float rightLimit = cam.transform.position.x + 4.5f;
 
             if (transform.position.x < leftLimit)
                 transform.position = new Vector3(rightLimit, transform.position.y, transform.position.z);

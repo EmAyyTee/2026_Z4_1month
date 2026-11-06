@@ -4,12 +4,8 @@ namespace Background
 {
     public class HorizonZoom : MonoBehaviour
     {
+        [Header("Player")]
         public Transform player;
-        public float followFactor = 0.3f;
-
-        [Header("Background Height Limits")]
-        public float maxBackgroundY = 10f;
-        public float minBackgroundY = -10f;
 
         private float _startPlayerY;
         private float _startBackgroundY;
@@ -27,16 +23,12 @@ namespace Background
 
             float difference = player.position.y - _startPlayerY;
 
-            float targetY = _startBackgroundY + difference * followFactor;
+            float targetY = _startBackgroundY + difference * 1.05f;
 
             // Ograniczenie wysokości tła
-            targetY = Mathf.Clamp(targetY, minBackgroundY, maxBackgroundY);
+            targetY = Mathf.Clamp(targetY, 0f, 15f);
 
-            transform.position = new Vector3(
-                transform.position.x,
-                targetY,
-                transform.position.z
-            );
+            transform.position = new Vector3(transform.position.x, targetY, transform.position.z);
         }
     }
 }

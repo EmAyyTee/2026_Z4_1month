@@ -43,7 +43,7 @@ namespace Player
             _enemyHealth = GetComponent<EnemyHealth>();
         }
 
-        // Co klatkę sprawdza czy zaatakowano oraz obsługuje atak.
+        // Co klatkę sprawdza, czy zaatakowano oraz obsługuje atak.
         private void Update()
         {
             ReadAttackInput();
@@ -63,7 +63,7 @@ namespace Player
                 // Odlicza czas trwania ataku (Dla animacji ataku).
                 _attackTimer -= Time.deltaTime;
 
-                // Po upływie czasu wyłączony zostaje parametr IsAttacking.
+                // Po upływie czasu wyłączony zostaje parametr isattacking.
                 if (_attackTimer <= 0f)
                     _animator.SetBool(IsAttacking, false);
             }
@@ -122,7 +122,7 @@ namespace Player
                 if (hit == null || !hit.CompareTag("Enemy"))
                     continue;
             
-                // Szuka EnemyHealth na trafionym obiekcie
+                // Szuka enemyhealth na trafionym obiekcie
                 _enemyHealth = hit.GetComponentInParent<EnemyHealth>();
             
                 // Zapisanie do transform.
