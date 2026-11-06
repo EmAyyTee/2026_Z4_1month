@@ -391,7 +391,11 @@ Transform:
   m_GameObject: {fileID: 40450340}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< Updated upstream:Assets/_Recovery/BOSS.unity
   m_LocalPosition: {x: -2.13, y: -0.62, z: 0}
+=======
+  m_LocalPosition: {x: -2.13, y: 10.2, z: 0}
+>>>>>>> Stashed changes:Assets/_Recovery/Final.unity
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7537,7 +7541,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 987629214}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba22baf28c1f75d4db3e80f3f44c4352, type: 3}
   m_Name: 
@@ -7546,6 +7550,11 @@ MonoBehaviour:
   scaleIncrease: 0.1
   smoothSpeed: 0.1
   heightFollowFactor: 1.27
+<<<<<<< Updated upstream:Assets/_Recovery/BOSS.unity
+=======
+  fixedX: 8
+  scaleHeightCorrection: 0.5
+>>>>>>> Stashed changes:Assets/_Recovery/Final.unity
 --- !u!114 &987629217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7558,15 +7567,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e86af2411004d46869e86105b57709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipMovement
-  background: {fileID: 0}
   moveDistance: 6.5
   moveSpeed: 2
   targetX: 8
+  sail: {fileID: 0}
   toWind: {fileID: 134177641}
   wind: {fileID: 555905003}
-  idle: {fileID: 133125533}
-  health: {fileID: 1170580361}
+  shipIdle: {fileID: 0}
+  healthBar: {fileID: 0}
   wall: {fileID: 1386533010}
+<<<<<<< Updated upstream:Assets/_Recovery/BOSS.unity
   wall1: {fileID: 1575678440}
   cannon: {fileID: 566201859}
   cannon1: {fileID: 247955606}
@@ -7574,6 +7584,14 @@ MonoBehaviour:
   player: {fileID: 40450344}
   verticalOffset: 4.51
   cannonBallSpawner: {fileID: 1346793069}
+=======
+  cannonShoot: {fileID: 0}
+  cannonReload: {fileID: 0}
+  cannonIdle: {fileID: 0}
+  cannonHit: {fileID: 833770152}
+  sailHit: {fileID: 80343242}
+  shipScale: {fileID: 0}
+>>>>>>> Stashed changes:Assets/_Recovery/Final.unity
 --- !u!114 &987629218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7588,7 +7606,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
   maxHealth: 100
   healthBar: {fileID: 822668435}
+<<<<<<< Updated upstream:Assets/_Recovery/BOSS.unity
   destroyDelay: 3
+=======
+  destroyDelay: 0
+  wait: 0.35
+--- !u!114 &987629219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987629214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee868f75f518e040852a7bc296112c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShipScale
+  player: {fileID: 40450344}
+  scaleIncrease: 0.1
+  smoothSpeed: 1
+  heightFollowFactor: 0.3
+  fixedWorldX: 8
+>>>>>>> Stashed changes:Assets/_Recovery/Final.unity
 --- !u!1001 &993592841
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17377,15 +17417,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e86af2411004d46869e86105b57709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipMovement
-  background: {fileID: 0}
   moveDistance: 5
   moveSpeed: 5
   targetX: 8
+  sail: {fileID: 0}
   toWind: {fileID: 0}
   wind: {fileID: 0}
-  idle: {fileID: 0}
-  health: {fileID: 0}
+  shipIdle: {fileID: 0}
+  healthBar: {fileID: 0}
   wall: {fileID: 0}
+<<<<<<< Updated upstream:Assets/_Recovery/BOSS.unity
   wall1: {fileID: 0}
   cannon: {fileID: 0}
   cannon1: {fileID: 0}
@@ -17393,6 +17434,14 @@ MonoBehaviour:
   player: {fileID: 0}
   verticalOffset: -2
   cannonBallSpawner: {fileID: 0}
+=======
+  cannonShoot: {fileID: 0}
+  cannonReload: {fileID: 0}
+  cannonIdle: {fileID: 0}
+  cannonHit: {fileID: 0}
+  sailHit: {fileID: 0}
+  shipScale: {fileID: 0}
+>>>>>>> Stashed changes:Assets/_Recovery/Final.unity
 --- !u!1 &1386533010
 GameObject:
   m_ObjectHideFlags: 0

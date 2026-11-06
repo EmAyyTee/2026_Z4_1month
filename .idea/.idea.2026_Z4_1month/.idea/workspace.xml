@@ -26,16 +26,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "e7bcfdec",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity 6000.3.24f1\Editor\Unity.exe" />
@@ -85,7 +85,15 @@
       <workItem from="1793203807371" duration="189000" />
       <workItem from="1793204314964" duration="3000" />
       <workItem from="1793204323046" duration="21599000" />
+<<<<<<< Updated upstream
       <workItem from="1793347407499" duration="69472000" />
+=======
+      <workItem from="1793347407499" duration="12739000" />
+      <workItem from="1793797200195" duration="10024000" />
+      <workItem from="1793884414487" duration="3000" />
+      <workItem from="1793884423914" duration="15662000" />
+      <workItem from="1793960800633" duration="965000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
