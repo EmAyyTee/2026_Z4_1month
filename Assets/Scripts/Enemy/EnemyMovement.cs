@@ -7,13 +7,14 @@ namespace Enemy
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
         private static readonly int YVelocity = Animator.StringToHash("YVelocity");
-        private static readonly int Jump = Animator.StringToHash("Jump");
 
-        [Header("Movement")] 
+
+        private Transform _player;
+        [SerializeField] private float _stopDistance = 0.8f;
+        [SerializeField] private float _detectionRange = 5f;
+
+        [Header("Movement")]
         public float speed = 2f;
-
-        [Header("Jump")] 
-        public float jumpForce = 2f;
 
         [HideInInspector] public bool isKnockedBack;
         [HideInInspector] public bool isGrounded;
@@ -22,7 +23,6 @@ namespace Enemy
         private Animator _animator;
         private SpriteRenderer _spriteRenderer;
 
-        private bool _jumpPressed;
         private float _horizontal; // Kierunek ruchu postaci -1 w lewo, 0 bez ruchu, 1 w prawo.
 
         private void Awake()
@@ -39,63 +39,62 @@ namespace Enemy
             isKnockedBack = false;
         }
 
+        private void Start()
+        {
+            // Szukamy gracza w uruchomionej scenie, a nie w pliku prefabu.
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player != null)
+                _player = player.transform;
+            else
+                Debug.LogWarning("Nie znaleziono aktywnego gracza z tagiem Player.", this);
+        }
+
         private void Update()
         {
+            FollowPlayer();
             HandleMovement();
-            HandleJump();
-            ReadMovementInput();
-            ReadJumpInput();
             UpdateFacingDirection();
             UpdateAnimations();
         }
 
-        // Dla testu dodałem możliwość poruszania się przeciwnika przez input.
 
-        private void ReadMovementInput()
+
+        private void FollowPlayer()
         {
-            _horizontal = 0f; // Wartość ta ma być resetowana przy każdym wywołaniu metody.
+            _horizontal = 0f;
 
-            if (Input.GetKey(KeyCode.J))
-                _horizontal = -1f;
-            else if (Input.GetKey(KeyCode.L))
-                _horizontal = 1f;
+            if (_player == null)
+                return;
+
+            float distance = Vector2.Distance(
+                transform.position,
+                _player.position
+            );
+
+            if (distance > _detectionRange)
+                return;
+
+            float distanceX = _player.position.x - transform.position.x;
+
+            if (Mathf.Abs(distanceX) > _stopDistance)
+                _horizontal = Mathf.Sign(distanceX);
         }
 
-        private void ReadJumpInput()
-        {
-            if (Input.GetKeyDown(KeyCode.I))
-                _jumpPressed = true;
-        }
+
 
         private void HandleMovement()
         {
             // Jeżeli postac jest odrzucana, nie nadpisuje jej ruchu.
             if (isKnockedBack)
                 return;
-        
+
             // Zachowuje aktualną prędkość pionową, aby nie anulować grawitacji ani skoku.
             _rb.linearVelocity = new Vector2(_horizontal * speed, _rb.linearVelocity.y);
         }
 
-        private void HandleJump()
-        {
-            if (!_jumpPressed)
-                return;
 
-            if (!isKnockedBack && isGrounded)
-            {
-                // Nadanie postaci prędkości skierowanej do góry.
-                _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);
 
-                isGrounded = false;
-
-                // Aktywuje trigger od animacji skoku.
-                if (_animator != null)
-                    _animator.SetTrigger(Jump);
-            }
-            _jumpPressed = false;
-        }
-    
         private void UpdateFacingDirection()
         {
             // Odwraca postać w prawo lub lewo zgodnie z ruchem, o ile postać jest w ruchu.
@@ -109,7 +108,7 @@ namespace Enemy
             _animator.SetBool(IsGrounded, isGrounded);
             _animator.SetFloat(YVelocity, _rb.linearVelocity.y);
         }
-    
+
         // Kolizja postaci z obiektami mającymi tag Ground
         private void OnCollisionEnter2D(Collision2D collision)
         {

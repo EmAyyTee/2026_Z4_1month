@@ -101,11 +101,22 @@ namespace Player
 
         private void ReadDashInput()
         {
-            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-                HandleDash(1f, ref _lastRightPressTime);
+            if (!Input.GetKeyDown(KeyCode.LeftShift))
+                return;
 
-            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-                HandleDash(-1f, ref _lastLeftPressTime);
+            if (_horizontal == 0f)
+                return;
+
+            if (Time.time < _nextDashTime || isKnockedBack || _isDashing)
+                return;
+
+            _isDashing = true;
+            _dashDirection = _horizontal;
+            _dashTimer = dashDuration;
+            _nextDashTime = Time.time + dashCooldown;
+
+            if (_spriteRenderer != null)
+                _spriteRenderer.flipX = _dashDirection < 0f;
         }
 
         private void HandleMovement()

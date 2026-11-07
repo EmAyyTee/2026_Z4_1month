@@ -205,8 +205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _player: {fileID: 0}
+  _stopDistance: 0.8
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!114 &7794594375376490152
