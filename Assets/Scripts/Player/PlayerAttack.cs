@@ -52,7 +52,7 @@ namespace Player
 
         private void ReadAttackInput()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.F))
                 _attackInput = true;
         }
 

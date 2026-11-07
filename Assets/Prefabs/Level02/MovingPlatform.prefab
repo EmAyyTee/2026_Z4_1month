@@ -180,5 +180,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform2D
   localTravel: {x: 6, y: 0}
-  speed: 0.65
+  speed: 2
   endpointPause: 0.5

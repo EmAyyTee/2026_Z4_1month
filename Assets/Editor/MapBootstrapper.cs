@@ -11,7 +11,7 @@ public static class MapBootstrapper
 {
     public const string ScenePath = "Assets/Scenes/Scene01/Level01.unity";
     public const string PrefabFolder = "Assets/Prefabs/Obstacles";
-    public const float CellSize = 0.32f;
+    public const float CellSize = 1f;
 
     [MenuItem("Tools/Maps/Rebuild Level 01")]
     private static void RebuildFromMenu()

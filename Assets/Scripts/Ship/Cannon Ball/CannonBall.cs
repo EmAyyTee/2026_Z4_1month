@@ -7,6 +7,9 @@ namespace Ship.Cannon_Ball
     {
         [Header("Movement")]
         public float fallSpeed = 5f;
+        
+        [Header("Ceiling Trap")]
+        public bool killPlayerOnContact = false;
 
         [Header("Explosion")]
         public float explosionRadius = 1.5f;
@@ -206,8 +209,20 @@ namespace Ship.Cannon_Ball
             // Kontakt z graczem.
             if (other.CompareTag("Player"))
             {
-                if (!canBeReflected)
+                if (killPlayerOnContact)
+                {
+                    PlayerHealth playerHealth =
+                        other.GetComponentInParent<PlayerHealth>();
+
+                    if (playerHealth != null)
+                        playerHealth.KillImmediately();
+
                     Explode();
+                }
+                else if (!canBeReflected)
+                {
+                    Explode();
+                }
 
                 return;
             }
