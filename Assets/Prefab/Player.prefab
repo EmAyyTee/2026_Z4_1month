@@ -250,6 +250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c848a28e249643843aab18c780b234d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  attackRange: 0.5
+  attackRange: 1.5
   attackCooldown: 1
   damage: 10
