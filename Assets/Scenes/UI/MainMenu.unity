@@ -632,7 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8eaaaee8f4d1e478819eeb2a100ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewGameButton
-  firstLevelScene: Level01
+  firstLevelScene: Level 1
 --- !u!1 &1207913941
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,6 +866,7 @@ GameObject:
   - component: {fileID: 1501121889}
   - component: {fileID: 1501121888}
   - component: {fileID: 1501121887}
+  - component: {fileID: 1501121890}
   m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -936,7 +937,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1501121888}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1501121890}
+        m_TargetAssemblyTypeName: ContinueButton, Assembly-CSharp
+        m_MethodName: ContinueGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1501121888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -975,6 +988,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1501121885}
   m_CullTransparentMesh: 1
+--- !u!114 &1501121890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501121885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6abbff8eb76557f4cb1724e4770da0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContinueButton
 --- !u!1 &1541004718
 GameObject:
   m_ObjectHideFlags: 0

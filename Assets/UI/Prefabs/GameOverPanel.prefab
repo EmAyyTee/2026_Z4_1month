@@ -88,6 +88,8 @@ GameObject:
   - component: {fileID: 1902450954326353025}
   - component: {fileID: 3935247659717136811}
   - component: {fileID: 2342526508941567567}
+  - component: {fileID: 5611196132551376225}
+  - component: {fileID: 7924201088621555976}
   m_Layer: 5
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -155,6 +157,31 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5611196132551376225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270596513180475346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d512fb0c707cda148a3402d0cc31507c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.GameOverPanelUI
+  _scoreText: {fileID: 5706115896700114341}
+--- !u!114 &7924201088621555976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270596513180475346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3193121ced8b2943afa98ae81b09737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RestartGame
 --- !u!1 &3381497451711204230
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,6 +605,7 @@ GameObject:
   - component: {fileID: 787065997574118000}
   - component: {fileID: 1895802966708638700}
   - component: {fileID: 1227523399920119884}
+  - component: {fileID: 3392544638375011284}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -686,7 +714,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1895802966708638700}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3392544638375011284}
+        m_TargetAssemblyTypeName: UI.ExitGameButton, Assembly-CSharp
+        m_MethodName: ExitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3392544638375011284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288263893377428547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad2327177a37e748895245a0d1fc850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.ExitGameButton
 --- !u!1 &6753565040164327661
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,6 +888,7 @@ GameObject:
   - component: {fileID: 4149064261906985034}
   - component: {fileID: 636798886169713454}
   - component: {fileID: 1257558143164790195}
+  - component: {fileID: 4818365280010829243}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -944,4 +997,28 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 636798886169713454}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4818365280010829243}
+        m_TargetAssemblyTypeName: RestartGame, Assembly-CSharp
+        m_MethodName: Restart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4818365280010829243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7694845278578474937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3193121ced8b2943afa98ae81b09737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RestartGame

@@ -26,6 +26,14 @@ namespace Game
             Instance = this;
             _coins = 0;
             _score = 0;
+
+            if (CheckpointSave.TryLoad(out var checkpoint) &&
+                checkpoint.sceneName == gameObject.scene.name)
+            {
+                _coins = checkpoint.coins;
+                _score = checkpoint.score;
+                StatsChanged?.Invoke();
+            }
         }
 
         public void AddCoins(int amount)
