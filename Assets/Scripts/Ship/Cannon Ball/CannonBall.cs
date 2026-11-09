@@ -1,3 +1,4 @@
+
 using Player;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Ship.Cannon_Ball
     {
         [Header("Movement")]
         public float fallSpeed = 5f;
-        
+
         [Header("Ceiling Trap")]
         public bool killPlayerOnContact = false;
 
@@ -16,20 +17,22 @@ namespace Ship.Cannon_Ball
         public int explosionDamage = 15;
         public GameObject explosionPrefab;
         public float explosionAnimationDuration = 0.8f;
-
+        public bool explodeOnGroundContact = true;
+        public float autoExplodeAfter = 3f;
+        
         [Header("Reflection")]
         public bool canBeReflected;
         public int bossDamage = 20;
-    
+
         public float knockbackForce = 1.5f;
         public float knockbackUpward = 1.5f;
 
         [Range(30f, 80f)]
         public float reflectionAngle = 60f;
-    
+
         [Header("Health")]
         public int maxHealth = 100;
-    
+
         [Header("Moon Physics")]
         public float moonGravity = 0.15f;
         public float moonReflectionSpeed = 6f;
@@ -38,13 +41,17 @@ namespace Ship.Cannon_Ball
         private bool _isReflected;
         private bool _hasExploded;
 
+        // ShootingTrap
+        private bool _launchedByTrap;
+        private Transform _trapSource;
+        private int _trapDamage;
+
         private BossHealth _bossHealth;
-    
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
 
-            // Pobieramy bossa już na początku.
             GameObject boss = GameObject.FindGameObjectWithTag("Boss");
 
             if (boss != null)
@@ -53,19 +60,40 @@ namespace Ship.Cannon_Ball
 
         private void Start()
         {
-            if (_rb != null)
+            if (_rb != null && !_launchedByTrap)
                 _rb.linearVelocity = Vector2.down * fallSpeed;
+
+            Invoke(nameof(AutoExplode), autoExplodeAfter);
         }
-    
+
+        // Wystrzeliwanie kuli przez ShootingTotem.
+        public void LaunchFromTrap(
+            Vector2 velocity,
+            int projectileDamage,
+            Transform projectileSource)
+        {
+            if (_rb == null)
+                return;
+
+            _launchedByTrap = true;
+            _trapSource = projectileSource;
+            _trapDamage = projectileDamage;
+
+            _rb.gravityScale = 0f;
+            _rb.linearVelocity = velocity;
+        }
+
         private BossHealth FindBossHealth()
         {
-            // Szukamy wszystkich komponentów BossHealth
-            BossHealth[] bosses = FindObjectsByType<BossHealth>(FindObjectsSortMode.None);
+            BossHealth[] bosses =
+                FindObjectsByType<BossHealth>(FindObjectsSortMode.None);
 
             foreach (BossHealth boss in bosses)
+            {
                 if (boss != null && !boss.IsDead)
                     return boss;
-        
+            }
+
             return null;
         }
 
@@ -76,8 +104,7 @@ namespace Ship.Cannon_Ball
 
             if (damage <= 0)
                 return;
-        
-            // Odbicie kuli w stronę bossa.
+
             Reflect(attacker);
         }
 
@@ -93,37 +120,43 @@ namespace Ship.Cannon_Ball
 
             _isReflected = true;
 
-            // Kierunek w stronę bossa.
-            float horizontalDirection = Mathf.Sign(_bossHealth.transform.position.x - transform.position.x);
+            // Po odbiciu kula przestaje być pociskiem totemu.
+            _launchedByTrap = false;
+            _trapSource = null;
+
+            float horizontalDirection = Mathf.Sign(
+                _bossHealth.transform.position.x - transform.position.x
+            );
 
             if (horizontalDirection == 0)
                 horizontalDirection = 1f;
 
-            // Kąt odbicia.
             float angleRadians = reflectionAngle * Mathf.Deg2Rad;
 
-            // Nowa prędkość początkowa.
-            Vector2 velocity = new Vector2(horizontalDirection * Mathf.Cos(angleRadians), Mathf.Sin(angleRadians)) * moonReflectionSpeed;
+            Vector2 velocity = new Vector2(
+                horizontalDirection * Mathf.Cos(angleRadians),
+                Mathf.Sin(angleRadians)
+            ) * moonReflectionSpeed;
 
-            // Dodatkowy knockback.
             if (attacker != null)
             {
-                float knockbackDirection = Mathf.Sign(transform.position.x - attacker.position.x);
+                float knockbackDirection = Mathf.Sign(
+                    transform.position.x - attacker.position.x
+                );
 
                 if (knockbackDirection == 0)
                     knockbackDirection = horizontalDirection;
 
-                velocity += new Vector2(knockbackDirection * knockbackForce, knockbackUpward);
+                velocity += new Vector2(
+                    knockbackDirection * knockbackForce,
+                    knockbackUpward
+                );
             }
 
-            // Fizykę ustawiamy jak na Księżycu.
             _rb.gravityScale = moonGravity;
 
-            // Zerujemy poprzedni ruch.
             _rb.linearVelocity = Vector2.zero;
             _rb.angularVelocity = 0f;
-
-            // Nadajemy nową prędkość.
             _rb.linearVelocity = velocity;
         }
 
@@ -139,10 +172,36 @@ namespace Ship.Cannon_Ball
 
             if (_bossHealth != null && !_bossHealth.IsDead)
                 _bossHealth.TakeDamage(bossDamage, transform);
-        
+
             Destroy(gameObject);
         }
 
+        // Sam efekt wizualny eksplozji.
+        private void SpawnExplosionEffect()
+        {
+            if (explosionPrefab == null)
+                return;
+
+            GameObject explosion = Instantiate(
+                explosionPrefab,
+                transform.position,
+                Quaternion.identity
+            );
+
+            Animator animator = explosion.GetComponent<Animator>();
+
+            if (animator != null)
+                animator.Play(0, 0, 0f);
+
+            Destroy(explosion, explosionAnimationDuration);
+        }
+
+        private void AutoExplode()
+        {
+            if (!_hasExploded)
+                Explode();
+        }        
+        
         private void Explode()
         {
             if (_hasExploded)
@@ -150,34 +209,30 @@ namespace Ship.Cannon_Ball
 
             _hasExploded = true;
 
-            if (explosionPrefab != null)
-            {
-                GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            SpawnExplosionEffect();
 
-                Animator animator = explosion.GetComponent<Animator>();
-
-                if (animator != null)
-                    animator.Play(0, 0, 0f);
-
-                Destroy(explosion, explosionAnimationDuration);
-            }
-
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(
+                transform.position,
+                explosionRadius
+            );
 
             foreach (Collider2D hit in hits)
             {
                 if (!hit.CompareTag("Player"))
                     continue;
 
-                PlayerHealth playerHealth = hit.GetComponentInParent<PlayerHealth>();
+                PlayerHealth playerHealth =
+                    hit.GetComponentInParent<PlayerHealth>();
 
                 if (playerHealth != null && !playerHealth.IsDead)
+                {
                     playerHealth.TakeDamage(explosionDamage, transform);
+                }
             }
+
             Destroy(gameObject);
         }
 
-    
         private void OnCollisionEnter2D(Collision2D collision)
         {
             HandleContact(collision.gameObject);
@@ -193,9 +248,18 @@ namespace Ship.Cannon_Ball
             if (_hasExploded)
                 return;
 
+            // Ignorujemy totem, który wystrzelił kulę.
+            if (_launchedByTrap &&
+                _trapSource != null &&
+                (other.transform == _trapSource ||
+                 other.transform.IsChildOf(_trapSource)))
+            {
+                return;
+            }
+
             BossHealth boss = other.GetComponentInParent<BossHealth>();
 
-            // Boss otrzymuje obrażenia WYŁĄCZNIE od odbitej kuli.
+            // Boss otrzymuje obrażenia wyłącznie od odbitej kuli.
             if (boss != null)
             {
                 if (_isReflected)
@@ -203,17 +267,37 @@ namespace Ship.Cannon_Ball
                     _bossHealth = boss;
                     HitBoss();
                 }
+
                 return;
             }
 
-            // Kontakt z graczem.
-            if (other.CompareTag("Player"))
+            PlayerHealth playerHealth =
+                other.GetComponentInParent<PlayerHealth>();
+
+            // Kula wystrzelona przez ShootingTotem.
+            if (_launchedByTrap && playerHealth != null)
+            {
+                if (!playerHealth.IsDead)
+                {
+                    playerHealth.TakeDamage(
+                        _trapDamage,
+                        _trapSource == null ? transform : _trapSource
+                    );
+                }
+
+                // Efekt eksplozji bez dodatkowych obrażeń obszarowych.
+                _hasExploded = true;
+                SpawnExplosionEffect();
+                Destroy(gameObject);
+
+                return;
+            }
+
+            // Standardowy kontakt z graczem.
+            if (other.CompareTag("Player") || playerHealth != null)
             {
                 if (killPlayerOnContact)
                 {
-                    PlayerHealth playerHealth =
-                        other.GetComponentInParent<PlayerHealth>();
-
                     if (playerHealth != null)
                         playerHealth.KillImmediately();
 
@@ -234,13 +318,15 @@ namespace Ship.Cannon_Ball
             {
                 if (current.CompareTag("Ground"))
                 {
-                    Explode();
+                    if (explodeOnGroundContact)
+                        Explode();
+
                     return;
                 }
+
                 current = current.parent;
             }
         }
-
 
         private void OnDrawGizmosSelected()
         {

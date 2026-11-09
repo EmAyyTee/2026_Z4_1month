@@ -204,8 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!95 &26233627
@@ -1631,8 +1632,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!95 &125652260
@@ -4629,8 +4631,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!95 &468062492
@@ -4997,8 +5000,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!95 &554182212
@@ -5634,8 +5638,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!95 &658971269
@@ -6493,8 +6498,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!95 &763365430
@@ -7127,8 +7133,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!95 &840964787
@@ -7966,8 +7973,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!95 &1049368364
@@ -16110,8 +16118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!95 &1123160763
@@ -19483,6 +19492,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!1001 &1656211769
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 315444846082322137, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315444846082322137, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2052017482776380099, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2052017482776380099, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2052017482776380099, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2052017482776380099, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2052017482776380099, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2052017482776380099, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2052017482776380099, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2052017482776380099, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2052017482776380099, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2052017482776380099, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2708338409495477968, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
+      propertyPath: m_Name
+      value: GameplayRig
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c5923ebc9bfb67f43a60d46530b971d3, type: 3}
 --- !u!1 &1668749051
 GameObject:
   m_ObjectHideFlags: 0
@@ -43572,8 +43646,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
-  jumpForce: 2
   isKnockedBack: 0
   isGrounded: 0
 --- !u!95 &1902304063
@@ -48930,3 +49005,4 @@ SceneRoots:
   - {fileID: 1144881552}
   - {fileID: 2938540927228288876}
   - {fileID: 2001679553}
+  - {fileID: 1656211769}

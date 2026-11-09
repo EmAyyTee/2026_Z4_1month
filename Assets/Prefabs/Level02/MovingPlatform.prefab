@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 3551911635106684915}
   - component: {fileID: 4787174953951607043}
   - component: {fileID: 3000769827948319042}
-  - component: {fileID: 5077102212307088099}
+  - component: {fileID: 4536480898919085589}
   m_Layer: 0
   m_Name: MovingPlatform
-  m_TagString: Ground
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,10 +82,10 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 22
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1887052711, guid: 7b029bce2a2f4cd488738e8a430a9815, type: 3}
-  m_Color: {r: 0.75, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -167,7 +167,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3, y: 0.27}
   m_EdgeRadius: 0
---- !u!114 &5077102212307088099
+--- !u!114 &4536480898919085589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,9 +176,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7550424864795166444}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b6cd2a6e51bde44b996acc2f92c61a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 41021b7900e5b654fb921b36031bd138, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform2D
-  localTravel: {x: 6, y: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::Moving_Platform.MovingPlatform
+  direction: 1
+  distance: 5
   speed: 2
-  endpointPause: 0.5

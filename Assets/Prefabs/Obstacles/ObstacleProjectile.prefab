@@ -82,7 +82,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 19
   m_MaskInteraction: 0
   m_Sprite: {fileID: 830078932, guid: 8bff7502fefe4ae4eada4cf281e2a890, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -170,3 +170,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleProjectile
   lifetime: 6
+  explosionPrefab: {fileID: 9189600883959353100, guid: 819e61f333a779e4e98f7653271d73d6, type: 3}
+  explosionAnimationDuration: 0.5

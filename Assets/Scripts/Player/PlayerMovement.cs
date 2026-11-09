@@ -141,7 +141,7 @@ namespace Player
 
             // Przenoszenie gracza razem z platformą.
             // Nie nadpisujemy prędkości pionowej, jeśli gracz skacze.
-            if (standingOnPlatform && _rb.linearVelocity.y <= 0f)
+            if (standingOnPlatform)
                 velocityY = platformVelocity.y;
         
             _rb.linearVelocity = new Vector2(velocityX, velocityY);
@@ -157,7 +157,13 @@ namespace Player
                 float platformVelocityY = 0f;
 
                 if (_movingPlatform != null)
-                    platformVelocityY = _movingPlatform.CurrentVelocity.y;
+                {
+                    // Przejmujemy prędkość platformy tylko wtedy, gdy porusza się w górę.
+                    platformVelocityY = Mathf.Max(
+                        0f,
+                        _movingPlatform.CurrentVelocity.y
+                    );
+                }
 
                 _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce + platformVelocityY);
             
@@ -230,21 +236,60 @@ namespace Player
 
         private void TrackSupport(Collision2D collision)
         {
-            var other = collision.collider;
+            Collider2D other = collision.collider;
+
+            if (other == null)
+                return;
+
             _supports.Remove(other);
-            bool walkable = other.CompareTag("Ground") || other.CompareTag("Box") || other.CompareTag("Platform");
-            float supportVelocity = collision.rigidbody != null ? collision.rigidbody.linearVelocity.y : 0f;
-            if (walkable && _rb.linearVelocity.y <= supportVelocity + 0.1f)
+
+            MovingPlatform platform =
+                other.GetComponentInParent<MovingPlatform>();
+
+            bool walkable =
+                HasTagInParents(other.transform, "Ground") ||
+                HasTagInParents(other.transform, "Box") ||
+                HasTagInParents(other.transform, "Platform") ||
+                platform != null;
+
+            if (!walkable)
             {
-                for (int i = 0; i < collision.contactCount; i++)
+                RefreshSupportState();
+                return;
+            }
+
+            bool standingOnTop = false;
+
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                if (collision.GetContact(i).normal.y > 0.5f)
                 {
-                    if (collision.GetContact(i).normal.y <= 0.5f)
-                        continue;
-                    _supports[other] = other.GetComponent<MovingPlatform>();
-                    _jumpsRemaining = maxJumps;
+                    standingOnTop = true;
                     break;
                 }
             }
+
+            float supportVelocityY = 0f;
+
+            if (platform != null)
+            {
+                supportVelocityY = platform.CurrentVelocity.y;
+            }
+            else if (collision.rigidbody != null)
+            {
+                supportVelocityY = collision.rigidbody.linearVelocity.y;
+            }
+
+            // Nie rejestrujemy podłoża, jeśli gracz właśnie od niego odskakuje.
+            bool movingAwayUpwards =
+                _rb.linearVelocity.y > supportVelocityY + 0.1f;
+
+            if (standingOnTop && !movingAwayUpwards)
+            {
+                _supports[other] = platform;
+                _jumpsRemaining = maxJumps;
+            }
+
             RefreshSupportState();
         }
 
@@ -253,18 +298,47 @@ namespace Player
             isGrounded = false;
             onSomething = false;
             _movingPlatform = null;
+
             foreach (var support in _supports)
             {
-                var collider = support.Key;
-                if (collider == null || !collider.enabled || !collider.gameObject.activeInHierarchy)
+                Collider2D collider = support.Key;
+
+                if (collider == null ||
+                    !collider.enabled ||
+                    !collider.gameObject.activeInHierarchy)
+                {
                     continue;
-                isGrounded |= collider.CompareTag("Ground");
-                onSomething |= collider.CompareTag("Box") || collider.CompareTag("Platform");
+                }
+
+                Transform supportTransform = collider.transform;
+
+                bool ground = HasTagInParents(supportTransform, "Ground");
+                bool box = HasTagInParents(supportTransform, "Box");
+                bool platformTag = HasTagInParents(supportTransform, "Platform");
+
+                isGrounded |= ground || support.Value != null;
+
+                onSomething |= box || platformTag;
+
                 if (support.Value != null)
                     _movingPlatform = support.Value;
             }
+
             if (_movingPlatform != null)
                 isGrounded = true;
+        }
+        
+        private bool HasTagInParents(Transform current, string tag)
+        {
+            while (current != null)
+            {
+                if (current.CompareTag(tag))
+                    return true;
+
+                current = current.parent;
+            }
+
+            return false;
         }
 
         public bool IsTouchingGround()

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1763028372037438939}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.55, y: 0.6, z: 0}
+  m_LocalPosition: {x: -0.016, y: -0.016, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41,8 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 492181207871564132}
   - component: {fileID: 8530587796262368988}
-  - component: {fileID: 8887648066464372564}
   - component: {fileID: 83825659897917137}
+  - component: {fileID: 243506704503184062}
   m_Layer: 0
   m_Name: ShooterTotem
   m_TagString: Untagged
@@ -60,7 +60,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7722399699318797198}
@@ -113,11 +113,11 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 20
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1072105941, guid: cfb0b1866418b2145be74d956cfe0fe8, type: 3}
+  m_Sprite: {fileID: -855298285791758126, guid: 7839e3e1ea7f35f44a782202e4366eb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.875, y: 1}
@@ -125,52 +125,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!61 &8887648066464372564
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2794358381928819118}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.45}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.875, y: 1}
-    newSize: {x: 1.875, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.7, y: 0.8}
-  m_EdgeRadius: 0
 --- !u!114 &83825659897917137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,9 +137,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332a21650a8dea946a215ecab98e3eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterTotemObstacle
-  projectilePrefab: {fileID: 3809275545698512535, guid: aee08acdc7370ea4dbe46d898cc528bd, type: 3}
+  cannonBallPrefab: {fileID: 7212735888310806450, guid: 73b8198793c275149970507989a6d647, type: 3}
   firePoint: {fileID: 7722399699318797198}
-  detectionRadius: 3.2
-  projectileSpeed: 2
+  detectionRadius: 4
+  projectileSpeed: 5
   fireCooldown: 1.8
-  damage: 10
+  damage: 1
+--- !u!95 &243506704503184062
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2794358381928819118}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 16c87d1d29c1378438ae44932a94db13, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

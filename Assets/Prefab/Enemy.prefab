@@ -60,7 +60,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 21
   m_TargetDisplay: 0
 --- !u!114 &2198439964015457908
 MonoBehaviour:
@@ -188,7 +188,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 21
   m_MaskInteraction: 0
   m_Sprite: {fileID: -603743758496190426, guid: 69fe24804b1e5754d9d6d79acc696514, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -307,8 +307,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523d7ebbef2a9ef4ca5c85055099c0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  _player: {fileID: 0}
   _stopDistance: 0.8
+  _detectionRange: 5
   speed: 2
   isKnockedBack: 0
   isGrounded: 0

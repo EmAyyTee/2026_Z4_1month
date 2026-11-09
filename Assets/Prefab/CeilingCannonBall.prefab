@@ -82,7 +82,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 19
   m_MaskInteraction: 0
   m_Sprite: {fileID: -855298285791758126, guid: 64be442db4c53a844a60cb6c4d59cbd9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -173,13 +173,15 @@ MonoBehaviour:
   killPlayerOnContact: 1
   explosionRadius: 0.3
   explosionDamage: 15
-  explosionPrefab: {fileID: 0}
-  explosionAnimationDuration: 0.8
+  explosionPrefab: {fileID: 9189600883959353100, guid: 819e61f333a779e4e98f7653271d73d6, type: 3}
+  explosionAnimationDuration: 0.5
+  explodeOnGroundContact: 1
+  autoExplodeAfter: 3
   canBeReflected: 0
   bossDamage: 20
   knockbackForce: 1.5
   knockbackUpward: 1.5
   reflectionAngle: 60
   maxHealth: 100
-  moonGravity: 0.15
+  moonGravity: 1
   moonReflectionSpeed: 6

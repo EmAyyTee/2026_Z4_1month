@@ -1,3 +1,4 @@
+
 using Player;
 using UnityEngine;
 
@@ -5,11 +6,17 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public sealed class ObstacleProjectile : MonoBehaviour
 {
+    [Header("Projectile")]
     [SerializeField, Min(0.1f)] private float lifetime = 6f;
+
+    [Header("Explosion")]
+    public GameObject explosionPrefab;
+    public float explosionAnimationDuration = 0.8f;
 
     private Rigidbody2D projectileBody;
     private Transform source;
     private int damage;
+    private bool hasExploded;
 
     private void Awake()
     {
@@ -21,24 +28,72 @@ public sealed class ObstacleProjectile : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
-    public void Launch(Vector2 velocity, int projectileDamage, Transform projectileSource)
+    public void Launch(
+        Vector2 velocity,
+        int projectileDamage,
+        Transform projectileSource)
     {
         damage = projectileDamage;
         source = projectileSource;
+
         projectileBody.linearVelocity = velocity;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (source != null && (other.transform == source || other.transform.IsChildOf(source)))
+        if (hasExploded)
             return;
 
-        PlayerHealth playerHealth = other.GetComponentInParent<PlayerHealth>();
+        // Ignorujemy obiekt, który wystrzelił pocisk.
+        if (source != null &&
+            (other.transform == source ||
+             other.transform.IsChildOf(source)))
+        {
+            return;
+        }
 
-        if (playerHealth != null)
-            playerHealth.TakeDamage(damage, source == null ? transform : source);
+        PlayerHealth playerHealth =
+            other.GetComponentInParent<PlayerHealth>();
 
+        if (playerHealth != null && !playerHealth.IsDead)
+        {
+            playerHealth.TakeDamage(
+                damage,
+                source == null ? transform : source
+            );
+
+            Explode();
+            return;
+        }
+
+        // Eksplozja po kontakcie z obiektem niebędącym triggerem.
         if (!other.isTrigger)
-            Destroy(gameObject);
+            Explode();
+    }
+
+    private void Explode()
+    {
+        if (hasExploded)
+            return;
+
+        hasExploded = true;
+
+        if (explosionPrefab != null)
+        {
+            GameObject explosion = Instantiate(
+                explosionPrefab,
+                transform.position,
+                Quaternion.identity
+            );
+
+            Animator animator = explosion.GetComponent<Animator>();
+
+            if (animator != null)
+                animator.Play(0, 0, 0f);
+
+            Destroy(explosion, explosionAnimationDuration);
+        }
+
+        Destroy(gameObject);
     }
 }
