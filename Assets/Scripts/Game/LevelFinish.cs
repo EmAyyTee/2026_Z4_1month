@@ -11,6 +11,11 @@ public class LevelFinish : MonoBehaviour
     {
         var player = other.GetComponentInParent<PlayerHealth>();
 
+        Transform current = other.transform;
+        
+        if (current.CompareTag("Enemy") || current.CompareTag("Boss"))
+            return;
+            
         if (finished || player == null || player.IsDead)
             return;
 

@@ -172,9 +172,11 @@ MonoBehaviour:
   fallSpeed: 0.01
   killPlayerOnContact: 0
   explosionRadius: 0.3
-  explosionDamage: 15
+  explosionDamage: 25
   explosionPrefab: {fileID: 9189600883959353100, guid: 819e61f333a779e4e98f7653271d73d6, type: 3}
-  explosionAnimationDuration: 0.8
+  explosionAnimationDuration: 0.5
+  explodeOnGroundContact: 1
+  autoExplodeAfter: 3
   canBeReflected: 0
   bossDamage: 20
   knockbackForce: 1.5

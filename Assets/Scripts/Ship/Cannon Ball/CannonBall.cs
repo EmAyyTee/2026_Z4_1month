@@ -1,4 +1,5 @@
 
+using Enemy;
 using Player;
 using UnityEngine;
 
@@ -119,6 +120,9 @@ namespace Ship.Cannon_Ball
                 return;
 
             _isReflected = true;
+            
+            // Anulujemy automatyczną eksplozję po odbiciu.
+            CancelInvoke(nameof(AutoExplode));
 
             // Po odbiciu kula przestaje być pociskiem totemu.
             _launchedByTrap = false;
@@ -316,7 +320,7 @@ namespace Ship.Cannon_Ball
 
             while (current != null)
             {
-                if (current.CompareTag("Ground"))
+                if (current.CompareTag("Ground") || current.CompareTag("Enemy"))
                 {
                     if (explodeOnGroundContact)
                         Explode();

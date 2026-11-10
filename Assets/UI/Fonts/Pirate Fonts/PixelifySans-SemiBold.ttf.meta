@@ -10,7 +10,10 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Pixelify Sans
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1918b33cb75efeb42b3ce8ab71db2c8a, type: 3}
+  - {fileID: 12800000, guid: 0a299aa717b919944baf685affa19672, type: 3}
+  - {fileID: 12800000, guid: 6dca016e74400e34688079bc16a90924, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

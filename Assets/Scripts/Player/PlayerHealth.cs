@@ -92,18 +92,20 @@ namespace Player
 
         public void TakeDamage(int damage, Transform attacker)
         {
-            // Martwa lub nieśmiertelna postać nie otrzymuje dodatkowych obrażeń oraz obrażeń ujemnych.
             if (_isDead || IsInvulnerable || damage <= 0)
+            {
                 return;
+            }
 
-            // Każde przyjęte obrażenie resetuje zegar.
+            int healthBefore = _currentHealth;
+
             _lastDamageTime = Time.time;
             _invulnerabilityTimer = invulnerabilityDuration;
 
             _currentHealth = Mathf.Max(0, _currentHealth - damage);
+            
             UpdateHealthUI();
 
-            // Animacja śmierci ma pierwszeństwo przed każdą inną animacją.
             if (_currentHealth <= 0)
             {
                 Die(false);
@@ -112,6 +114,7 @@ namespace Player
 
             _animator.SetTrigger(Hit);
             _animator.Update(0f);
+
             ApplyKnockback(attacker);
         }
 

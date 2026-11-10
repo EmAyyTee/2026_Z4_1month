@@ -139,10 +139,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterTotemObstacle
   cannonBallPrefab: {fileID: 7212735888310806450, guid: 73b8198793c275149970507989a6d647, type: 3}
   firePoint: {fileID: 7722399699318797198}
-  detectionRadius: 4
+  detectionRadius: 10
   projectileSpeed: 5
   fireCooldown: 1.8
-  damage: 1
+  damage: 25
 --- !u!95 &243506704503184062
 Animator:
   serializedVersion: 7

@@ -1,41 +1,65 @@
+
 using System.Collections;
+using Enemy;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Ship.Cannon_Ball
 {
     public class CannonBallSpawner : MonoBehaviour
     {
-        [Header("References")]
+        [Header("Cannon Balls")]
         public GameObject cannonBallPrefab;
         public GameObject reflectableCannonBallPrefab;
-        public Transform player;
 
         [Header("Cannon Visuals")]
-        public GameObject cannon;
-        [FormerlySerializedAs("cannon_2")] public GameObject cannon2;
-        public float shootAnimationDuration = 0.5f;
+        public GameObject cannonShoot;
+        public GameObject cannonReload;
 
-        [Header("Spawn Position")]
-        public float spawnHeight = 8f;
-        public float minX = -5f;
-        public float maxX = 5f;
+        [Header("Fixed World Spawn Area")]
+        [Tooltip("Globalna wysokość spawnowania kul.")]
+        public float spawnHeight = 14f;
+
+        [Tooltip("Minimalna globalna pozycja X.")]
+        public float minX = -4f;
+
+        [Tooltip("Maksymalna globalna pozycja X.")]
+        public float maxX = 4f;
+
+        [Tooltip("Globalna pozycja Z.")]
+        public float spawnZ = 0f;
 
         [Header("Spawn Settings")]
         public float spawnInterval = 1.5f;
-        public int cannonBallCount = 10;
 
         [Header("Special CannonBall")]
         public int reflectableBallInterval = 5;
 
+        [Header("Spawn Visualization")]
+        public bool showSpawnArea = true;
+        public float spawnMarkerRadius = 0.25f;
+
+        private BossHealth _bossHealth;
+
         private float _spawnTimer;
         private int _spawnedBalls;
+
         private bool _isSpawning;
         private bool _isShooting;
         private bool _isPaused;
 
+        private void Awake()
+        {
+            _bossHealth = FindFirstObjectByType<BossHealth>();
+        }
+
         private void Update()
         {
+            if (_bossHealth != null && _bossHealth.IsDead)
+            {
+                StopSpawning();
+                return;
+            }
+
             if (!_isSpawning || _isPaused)
                 return;
 
@@ -52,11 +76,11 @@ namespace Ship.Cannon_Ball
             _isSpawning = true;
         }
 
-        public void StopSpawning()
+        private void StopSpawning()
         {
             _isSpawning = false;
         }
-    
+
         public void PauseSpawning()
         {
             _isPaused = true;
@@ -70,56 +94,145 @@ namespace Ship.Cannon_Ball
         private IEnumerator ShootCannonBall()
         {
             _isShooting = true;
-        
-            // Animacja wystrzału.
-            if (cannon != null) cannon.SetActive(false);
 
-            if (cannon2 != null) cannon2.SetActive(true);
+            // Animacja armaty.
+            if (cannonShoot != null)
+                cannonShoot.SetActive(false);
 
-            // Powrót do normalnego wyglądu armaty.
-            if (cannon != null) cannon.SetActive(true);
-        
-            if (cannon2 != null) cannon2.SetActive(false);
-        
-            yield return new WaitForSeconds(shootAnimationDuration);
-        
-            // Jeśli boss otrzymał obrażenia, czekamy z wystrzałem.
+            if (cannonReload != null)
+                cannonReload.SetActive(true);
+
+            if (cannonShoot != null)
+                cannonShoot.SetActive(true);
+
+            if (cannonReload != null)
+                cannonReload.SetActive(false);
+
+            yield return new WaitForSeconds(0.25f);
+
+            // Czekamy, jeśli boss otrzymał obrażenia.
             while (_isPaused)
                 yield return null;
-        
-            if (cannon != null) cannon.SetActive(false);
 
-            if (cannon2 != null) cannon2.SetActive(true);
-            
-            // Spawn kuli.
+            // Animacja wystrzału.
+            if (cannonShoot != null)
+                cannonShoot.SetActive(false);
+
+            if (cannonReload != null)
+                cannonReload.SetActive(true);
+
+            // Tworzenie kuli.
             SpawnCannonBall();
 
             _spawnedBalls++;
             _spawnTimer = spawnInterval;
-
-            if (_spawnedBalls >= cannonBallCount)
-                StopSpawning();
 
             _isShooting = false;
         }
 
         private void SpawnCannonBall()
         {
-            if (cannonBallPrefab == null || player == null)
+            if (cannonBallPrefab == null)
                 return;
 
-            bool isReflectable = (_spawnedBalls + 1) % reflectableBallInterval == 0;
+            // Co określoną liczbę kul pojawia się kula odbijalna.
+            int interval = Mathf.Max(1, reflectableBallInterval);
 
-            GameObject selectedPrefab = isReflectable ? reflectableCannonBallPrefab : cannonBallPrefab;
+            bool isReflectable =
+                (_spawnedBalls + 1) % interval == 0;
+
+            GameObject selectedPrefab =
+                isReflectable && reflectableCannonBallPrefab != null
+                    ? reflectableCannonBallPrefab
+                    : cannonBallPrefab;
 
             if (selectedPrefab == null)
                 return;
-            
-            float randomX = Random.Range(minX, maxX);
 
-            Vector3 spawnPosition = new Vector3(player.position.x + randomX, spawnHeight, 0f);
+            // Losujemy globalną pozycję X.
+            float left = Mathf.Min(minX, maxX);
+            float right = Mathf.Max(minX, maxX);
 
-            Instantiate(selectedPrefab, spawnPosition, Quaternion.identity);
+            float randomX = Random.Range(left, right);
+
+            // Stała pozycja świata, niezależna od gracza.
+            Vector3 spawnPosition = new Vector3(
+                randomX,
+                spawnHeight,
+                spawnZ
+            );
+
+            Instantiate(
+                selectedPrefab,
+                spawnPosition,
+                Quaternion.identity
+            );
+
+            Debug.Log(
+                "[CannonBallSpawner] Spawn at WORLD position: "
+                + spawnPosition
+            );
+        }
+
+        // WIZUALIZACJA OBSZARU SPAWNU W SCENE VIEW.
+        private void OnDrawGizmos()
+        {
+            if (!showSpawnArea)
+                return;
+
+            float left = Mathf.Min(minX, maxX);
+            float right = Mathf.Max(minX, maxX);
+
+            Vector3 leftPoint = new Vector3(
+                left,
+                spawnHeight,
+                spawnZ
+            );
+
+            Vector3 rightPoint = new Vector3(
+                right,
+                spawnHeight,
+                spawnZ
+            );
+
+            Vector3 center = new Vector3(
+                (left + right) * 0.5f,
+                spawnHeight,
+                spawnZ
+            );
+
+            Gizmos.color = Color.cyan;
+
+            // Linia przedstawiająca cały obszar spawnowania.
+            Gizmos.DrawLine(leftPoint, rightPoint);
+
+            // Granice obszaru.
+            Gizmos.DrawWireSphere(
+                leftPoint,
+                spawnMarkerRadius
+            );
+
+            Gizmos.DrawWireSphere(
+                rightPoint,
+                spawnMarkerRadius
+            );
+
+            // Środkowy punkt obszaru.
+            Gizmos.DrawWireSphere(
+                center,
+                spawnMarkerRadius * 0.7f
+            );
+
+            // Pionowe znaczniki wysokości.
+            Gizmos.DrawLine(
+                leftPoint,
+                leftPoint + Vector3.down * 0.6f
+            );
+
+            Gizmos.DrawLine(
+                rightPoint,
+                rightPoint + Vector3.down * 0.6f
+            );
         }
     }
 }

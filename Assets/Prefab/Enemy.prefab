@@ -325,9 +325,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 30
-  knockbackForce: 2
-  knockbackUpward: 1
-  knockbackDuration: 0.2
+  knockbackForce: 4
+  knockbackUpward: 2
+  knockbackDuration: 0.4
   minimumFallHeight: 1
   fallDamagePerUnit: 1000000
   healthBar: {fileID: 7385804138044724176}

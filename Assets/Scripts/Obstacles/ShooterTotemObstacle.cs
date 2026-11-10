@@ -1,3 +1,4 @@
+
 using Player;
 using Ship.Cannon_Ball;
 using UnityEngine;
@@ -13,7 +14,6 @@ public sealed class ShooterTotemObstacle : MonoBehaviour
     [SerializeField] private Transform firePoint;
 
     [Header("Shooting")]
-    [Header("Shooting")]
     [SerializeField, Min(0.1f)] private float detectionRadius = 8f;
     [SerializeField, Min(0.1f)] private float projectileSpeed = 7f;
     [SerializeField, Min(0.1f)] private float fireCooldown = 1.5f;
@@ -21,15 +21,16 @@ public sealed class ShooterTotemObstacle : MonoBehaviour
 
     private PlayerHealth target;
     private float nextFireTime;
-    private Animator _animator;
+    private Animator animator;
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        // Wyszukiwanie gracza.
         if (target == null)
             target = FindAnyObjectByType<PlayerHealth>();
 
@@ -37,31 +38,62 @@ public sealed class ShooterTotemObstacle : MonoBehaviour
             target.IsDead ||
             cannonBallPrefab == null ||
             firePoint == null)
+        {
+            return;
+        }
+
+        // Obliczamy kierunek od pułapki do gracza.
+        Vector2 offset =
+            (Vector2)target.transform.position - (Vector2)firePoint.position;
+
+        // Sprawdzamy zasięg wykrywania.
+        if (offset.sqrMagnitude > detectionRadius * detectionRadius)
             return;
 
-        Vector2 offset = target.transform.position - firePoint.position;
-
-        if (offset.sqrMagnitude > detectionRadius * detectionRadius ||
-            Time.time < nextFireTime)
+        // Sprawdzamy cooldown.
+        if (Time.time < nextFireTime)
             return;
 
-        if (_animator != null)
-            _animator.SetTrigger(Attack);
+        ShootAtPlayer(offset);
 
+        nextFireTime = Time.time + fireCooldown;
+    }
+
+    private void ShootAtPlayer(Vector2 direction)
+    {
+        if (direction.sqrMagnitude < 0.0001f)
+            return;
+
+        // Animacja ataku.
+        if (animator != null)
+            animator.SetTrigger(Attack);
+
+        // Tworzymy pocisk.
         CannonBall cannonBall = Instantiate(
             cannonBallPrefab,
             firePoint.position,
             Quaternion.identity
         );
 
+        // Zachowujemy skalę pułapki.
         cannonBall.transform.localScale = transform.lossyScale;
 
+        // Wystrzeliwujemy pocisk w kierunku gracza.
         cannonBall.LaunchFromTrap(
-            offset.normalized * projectileSpeed,
+            direction.normalized * projectileSpeed,
             damage,
             transform
         );
+    }
 
-        nextFireTime = Time.time + fireCooldown;
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+
+        Vector3 position = firePoint != null
+            ? firePoint.position
+            : transform.position;
+
+        Gizmos.DrawWireSphere(position, detectionRadius);
     }
 }

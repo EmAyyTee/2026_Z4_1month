@@ -12,11 +12,15 @@ namespace Coins
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            Transform current = other.transform;
+
+            while (current != null && !current.CompareTag("Player"))
+                return;
+            
             if (_collected)
                 return;
 
-            PlayerHealth player =
-                other.GetComponentInParent<PlayerHealth>();
+            PlayerHealth player = other.GetComponentInParent<PlayerHealth>();
 
             if (player == null || player.IsDead)
                 return;

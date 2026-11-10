@@ -169,19 +169,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ecd4c432106ce446b19b81c268ce522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CannonBall
-  fallSpeed: 1
+  fallSpeed: 5
   killPlayerOnContact: 0
   explosionRadius: 0.3
-  explosionDamage: 15
+  explosionDamage: 25
   explosionPrefab: {fileID: 9189600883959353100, guid: 819e61f333a779e4e98f7653271d73d6, type: 3}
   explosionAnimationDuration: 0.5
   explodeOnGroundContact: 1
-  autoExplodeAfter: 2
+  autoExplodeAfter: 3
   canBeReflected: 0
   bossDamage: 20
   knockbackForce: 1.5
   knockbackUpward: 1.5
   reflectionAngle: 60
   maxHealth: 100
-  moonGravity: 50
+  moonGravity: 0.15
   moonReflectionSpeed: 6
